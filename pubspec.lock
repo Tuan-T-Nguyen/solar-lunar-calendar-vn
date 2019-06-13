@@ -48,6 +48,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -60,6 +65,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.8"
+  lunar_calendar_converter:
+    dependency: "direct main"
+    description:
+      name: lunar_calendar_converter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4+1"
   matcher:
     dependency: transitive
     description:
