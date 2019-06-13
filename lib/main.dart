@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'data-bg.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +17,53 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PageViewDemo(),
+      home: HomePage(),
     );
   }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+//  Widget _buildMonthYear(double height) {
+//    return Positioned(
+//      height: height * 0.1,
+//      child: Row(
+//        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//        children: <Widget>[
+//          Text(
+//            "${_now.month} / ${_now.year}",
+//            style: TextStyle(
+//                color: Colors.blue,
+//                fontSize: 26.0,
+//                fontWeight: FontWeight.bold),
+//          ),
+//        ],
+//      ),
+//    );
+//  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: LayoutBuilder(builder: (context, constrains) {
+        var width = constrains.maxWidth;
+        var height = constrains.maxHeight;
+        return Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            //_buildMonthYear(height),
+          ],
+        );
+      },),
+    );
+  }
+
 }
 
 class PageViewDemo extends StatefulWidget {
@@ -23,110 +72,72 @@ class PageViewDemo extends StatefulWidget {
 }
 
 class _PageViewDemoState extends State<PageViewDemo> {
-
-  PageController _pageController = PageController(initialPage: 1);
-
-
+  static PageController _pageController = PageController(initialPage: 183);
   var _now = new DateTime.now();
-  void pageChanged(DismissDirection direction) {
-    setState(() {
-      if (direction == DismissDirection.startToEnd) {
-        _now = new DateTime(_now.year, _now.month, _now.day - 1);
-      } else if (direction == DismissDirection.endToStart) {
-        _now = new DateTime(_now.year, _now.month, _now.day + 1);
-      }
-    });
-  }
+  int _previousPage = _pageController.initialPage;
 
-  Widget _buildCalendar() {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 40.0,
-          ),
-          Text(
-            "${_now.month} / ${_now.year}",
-            style: TextStyle(
-                color: Colors.blue,
-                fontSize: 26.0,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 150.0,
-          ),
-          Text(
-            "${_now.day}",
-            style: TextStyle(
-                color: Colors.blue,
-                fontSize: 66.0,
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDismissible() {
-    return Dismissible(
-      direction: DismissDirection.horizontal,
-      onDismissed: (DismissDirection direction) {
-        pageChanged(direction);
-      },
-      key: new ValueKey(_now),
-      child: _buildCalendar(),
-    );
-  }
+  Random random = new Random();
 
   Widget _buildPageView() {
     return PageView.builder(
       controller: _pageController,
-      itemCount: 3,
+      itemCount: 365,
       itemBuilder: (BuildContext context, int position) {
         return Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Stack(
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  Text(
-                    "${_now.month} / ${_now.year}",
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 150.0,
-                  ),
-                  Text(
-                    "${_now.day}",
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 66.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+              SvgPicture.asset(
+                // Todo not random, from 1 to 31 and depend on season
+                assetsSvgBackground[random.nextInt(assetsSvgBackground.length)],
+                fit: BoxFit.fitWidth
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        Text(
+                          "${_now.month} / ${_now.year}",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 26.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 150.0,
+                        ),
+                        Text(
+                          "${_now.day}",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 180.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
+
         );
       },
       onPageChanged: (int position) {
         setState(() {
-          if (position == 0) {
-            _now = new DateTime(_now.year, _now.month, _now.day - 1);
-          } else if (position == 2) {
+          if (_previousPage < position) {
             _now = new DateTime(_now.year, _now.month, _now.day + 1);
+          } else {
+            _now = new DateTime(_now.year, _now.month, _now.day - 1);
           }
+          _previousPage = position;
         });
-        if (position == 0 || position == 2) {
-          _pageController.animateToPage(1, duration: Duration (milliseconds: 1000), curve: Curves.ease);
-        }
+        // Todo case position = 0 and max-page
       },
     );
   }
