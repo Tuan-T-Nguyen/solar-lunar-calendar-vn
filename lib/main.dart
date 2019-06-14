@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import './utils/calendar.dart';
+import './utils/date_picker_vn.dart';
 
 import 'data-bg.dart';
 
@@ -26,10 +27,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('vi'),
-        const Locale('en')
-      ],
+      supportedLocales: [const Locale('vi'), const Locale('en')],
     );
   }
 }
@@ -42,6 +40,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static PageController _pageController = PageController(initialPage: 183);
   var _previousPage = _pageController.initialPage;
+
   Random random = new Random();
   var _now = new DateTime.now();
 
@@ -52,29 +51,27 @@ class _HomePageState extends State<HomePage> {
       solarDay: _nowConvert.day);
   Lunar _lunar = LunarSolarConverter.solarToLunar(solar);
 
-  static const double TEXT_OFFSET = 4.0;
+  static const double TEXT_OFFSET = 1.0;
 
   double heightSolarYearMonth = 40.0;
 
   DateTime selectedDate = DateTime.now();
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _now,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101),
-        locale: const Locale('vi', 'VN'),
-//      initialDatePickerMode:
+    final DateTime picked = await showDatePickerCustom(
+      context: context,
+      initialDate: _now,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+      locale: const Locale('vi', 'VN'),
+
     );
-    
+
     if (picked != null && picked != selectedDate)
       setState(() {
         _now = picked;
         Solar solar = Solar(
-            solarYear: _now.year,
-            solarMonth: _now.month,
-            solarDay: _now.day);
+            solarYear: _now.year, solarMonth: _now.month, solarDay: _now.day);
         _lunar = LunarSolarConverter.solarToLunar(solar);
       });
   }
@@ -84,26 +81,15 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          CalendarUtils.getDayStringBy(_now.weekday),
+          "Tháng ${_now.month} - ${_now.year}",
           style: TextStyle(
-              color: _now.weekday == 6 || _now.weekday == 7
-                  ? Theme.of(context).primaryColor
-                  : Colors.blueAccent,
-              fontSize: 26.0,
-              fontWeight: FontWeight.bold),
+            color: Colors.blueAccent,
+          ),
         ),
-        SizedBox(
-          width: 15.0,
-        ),
-        Text(
-          "${_now.month} / ${_now.year}",
-          style: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 26.0,
-              fontWeight: FontWeight.bold),
-        ),
-        SizedBox(width: 15.0,),
-//        Icon(Icons.arrow_drop_down, color: Colors.blueAccent,)
+        Icon(
+          Icons.arrow_drop_down,
+          color: Colors.blueAccent,
+        )
       ],
     );
   }
@@ -111,45 +97,84 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSolarDay() {
     return Stack(
       children: <Widget>[
+//        Container(
+//          height: MediaQuery.of(context).size.height / 2 - 40,
+//          color: _now.weekday == 6 || _now.weekday == 7
+//              ? Colors.blueAccent
+//              : Theme.of(context).primaryColor,
+//          padding:
+//              EdgeInsets.only(right: 10.0, bottom: 0.0, left: 10.0, top: 0.0),
+//          child: SvgPicture.asset(
+//            // Todo not random, from 1 to 31 and depend on season
+//            assetsSvgBackground[random.nextInt(assetsSvgBackground.length)],
+//            fit: BoxFit.fitWidth,
+//            semanticsLabel: '',
+//          ),
+//        ),
         Container(
-          padding:
-              EdgeInsets.only(right: 10.0, bottom: 0.0, left: 10.0, top: 0.0),
-          child: SvgPicture.asset(
-            // Todo not random, from 1 to 31 and depend on season
-            assetsSvgBackground[random.nextInt(assetsSvgBackground.length)],
-            fit: BoxFit.fitWidth,
-            semanticsLabel: 'Ahihi',
-          ),
-        ),
-        Container(
+          height: MediaQuery.of(context).size.height / 2 - 40,
+          //padding: EdgeInsets.only(bottom: 10.0),
           alignment: Alignment.center,
-          child: Text(
-            "${_now.day}",
-            style: TextStyle(
-              color: (_now.weekday == 6 || _now.weekday == 7)
-                  ? Theme.of(context).primaryColor
-                  : Colors.blueAccent,
-              fontSize: 200.0,
-              fontWeight: FontWeight.w900,
-              shadows: <Shadow>[
-                Shadow(
-                    // bottomLeft
-                    offset: Offset(-TEXT_OFFSET, -TEXT_OFFSET),
-                    color: Colors.white),
-                Shadow(
-                    // bottomRight
-                    offset: Offset(TEXT_OFFSET, -TEXT_OFFSET),
-                    color: Colors.white),
-                Shadow(
-                    // topRight
-                    offset: Offset(TEXT_OFFSET, TEXT_OFFSET),
-                    color: Colors.white),
-                Shadow(
-                    // topLeft
-                    offset: Offset(-TEXT_OFFSET, TEXT_OFFSET),
-                    color: Colors.white),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "${_now.day}",
+                style: TextStyle(
+                  color: (_now.weekday == 6 || _now.weekday == 7)
+                      ? Theme.of(context).primaryColor
+                      : Colors.blueAccent,
+                  fontSize: 200.0,
+                  fontWeight: FontWeight.w900,
+                  shadows: <Shadow>[
+                    Shadow(
+                        // bottomLeft
+                        offset: Offset(-TEXT_OFFSET, -TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // bottomRight
+                        offset: Offset(TEXT_OFFSET, -TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // topRight
+                        offset: Offset(TEXT_OFFSET, TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // topLeft
+                        offset: Offset(-TEXT_OFFSET, TEXT_OFFSET),
+                        color: Colors.white),
+                  ],
+                ),
+              ),
+              Text(
+                CalendarUtils.getDayStringBy(_now.weekday),
+                style: TextStyle(
+                  color: _now.weekday == 6 || _now.weekday == 7
+                      ? Theme.of(context).primaryColor
+                      : Colors.blueAccent,
+                  fontSize: 36.0,
+                  fontWeight: FontWeight.w900,
+                  shadows: <Shadow>[
+                    Shadow(
+                        // bottomLeft
+                        offset: Offset(-TEXT_OFFSET, -TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // bottomRight
+                        offset: Offset(TEXT_OFFSET, -TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // topRight
+                        offset: Offset(TEXT_OFFSET, TEXT_OFFSET),
+                        color: Colors.white),
+                    Shadow(
+                        // topLeft
+                        offset: Offset(-TEXT_OFFSET, TEXT_OFFSET),
+                        color: Colors.white),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -159,14 +184,34 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Center(
-          child: SizedBox(
-            width: 280,
-            child: OutlineButton(onPressed: () => _selectDate(context), child: _buildMonthYear(),),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.today,
+              color: Colors.blueAccent,
+            ),
+            onPressed: () {
+              setState(() {
+                _now = new DateTime.now();
+                Solar solar = Solar(
+                    solarYear: _now.year,
+                    solarMonth: _now.month,
+                    solarDay: _now.day);
+                _lunar = LunarSolarConverter.solarToLunar(solar);
+              });
+            },
+            tooltip: "Hôm nay",
+          ),
+        ],
+        centerTitle: true,
+        title: GestureDetector(
+          onTap: () => _selectDate(context),
+          child: Container(
+            child: _buildMonthYear(),
           ),
         ),
       ),
@@ -177,59 +222,70 @@ class _HomePageState extends State<HomePage> {
           return Container(
             child: Column(
               children: <Widget>[
-//                SizedBox(
-//                  height: 20.0,
-//                ),
-//                _buildMonthYear(),
-                Expanded(child: _buildSolarDay()),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-//                    Divider(
-//                      color: Theme.of(context).primaryColor,
-//                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Chip(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          label: Text(
-                            'Âm lịch',
-                            style: TextStyle(
-                              color: Colors.white,
+                _buildSolarDay(),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Chip(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            label: Text(
+                              'Lịch âm - Năm ' + CalendarUtils.getCanChiOfYear(_lunar.lunarYear),
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-//                    Divider(
-//                      color: Theme.of(context).primaryColor,
-//                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      "Tháng ${_lunar.lunarMonth}",
-                      style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 26.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      _lunar.lunarDay.toString(),
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 100.0,
-                        fontWeight: FontWeight.w900,
+                        ],
                       ),
-                    )
-                  ],
+                      Expanded(
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Text("Ngày"),
+                                  Text("${_lunar.lunarDay}", style: TextStyle(
+                                      color: _lunar.lunarDay == 15 || _lunar.lunarDay == 1
+                                          ? Theme.of(context).primaryColor
+                                          : Colors.blueAccent,
+                                      fontSize: 100.0,
+                                      fontWeight: FontWeight.bold)),
+                                  Text(CalendarUtils.getCanChiOfDay(
+                                      _now.day, _now.month, _now.year), style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 22.0,
+                                      fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Text("Tháng"),
+                                  Text("${_lunar.lunarMonth}", style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 100.0,
+                                      fontWeight: FontWeight.bold)),
+                                  Text(CalendarUtils.getCanChiOfMonth(
+                                      _lunar.lunarYear, _lunar.lunarMonth), style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 22.0,
+                                      fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
                 ),
-//                Expanded(
-//                  child: Column(
-//
-//                  ),
-//                )
               ],
             ),
           );
