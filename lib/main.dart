@@ -337,12 +337,10 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: <Widget>[
           // Days
-          Flexible(
-            flex: 2,
-            child: Container(
-              //color: Colors.green,
-              child: DaysInMonth(_daysInMonth),
-            ),
+          Container(
+            alignment: Alignment.center,
+            height: 120.0,
+            child: DaysInMonth(_daysInMonth, _now.day),
           ),
 
           // Illustrations

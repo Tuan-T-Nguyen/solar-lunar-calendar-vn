@@ -9,22 +9,35 @@ class DaysInMonth extends StatelessWidget {
 
   final List<DateInfo> items;
 
-  DaysInMonth(this.items);
+  int selectedDay;
+
+  DaysInMonth(this.items, this.selectedDay);
 
   Widget _buildDayItem(BuildContext context, int position) {
     DateInfo item = items[position];
-    Color itemTextColor = (item.now.weekday == 6 || item.now.weekday == 7) ? primaryColor : secondaryColor;
+    Color itemTextColor = item.now.day == selectedDay ? Colors.white :
+                          (item.now.weekday == 6 || item.now.weekday == 7) ? primaryColor : secondaryColor;
     return Container(
-      width: 80.0,
+      width: 90.0,
       child: Card(
-        child: Column(
-          children: <Widget>[
-            Text(item.now.day.toString(), style: TextStyle(
-              color: item.now.weekday == 6 || item.now.weekday == 7 ? primaryColor : secondaryColor,
-              fontSize: 40.0,
-            ),),
-            Text(CalendarUtils.getDayStringBy(item.now.weekday)),
-          ],
+        color: item.now.day == selectedDay ? primaryColor : bgDayItem,
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(item.now.day.toString(), style: TextStyle(
+                color: itemTextColor,
+                fontSize: Theme.of(context).textTheme.display1.fontSize,
+                fontWeight: FontWeight.bold,
+              ),),
+              Text(CalendarUtils.getDayStringBy(item.now.weekday), style: TextStyle(
+                color: itemTextColor,
+                fontSize: Theme.of(context).textTheme.subtitle.fontSize,
+                fontWeight: FontWeight.bold,
+              ),),
+            ],
+          ),
         ),
       ),
     );
