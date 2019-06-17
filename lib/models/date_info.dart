@@ -15,5 +15,4 @@ class DateInfo {
 
   DateInfo({this.now,});
 
-
 }

@@ -3,24 +3,39 @@ import 'package:pageview/models/date_info.dart';
 import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/theme.dart';
 
-class DaysInMonth extends StatelessWidget {
+class DaysInMonth extends StatefulWidget {
 
   static BuildContext context;
 
   final List<DateInfo> items;
 
-  int selectedDay;
+  final int selectedDay;
 
-  DaysInMonth(this.items, this.selectedDay);
+ // DaysInMonth(this.items, this._selectedDay);
+
+  DaysInMonth({Key key, this.items, this.selectedDay}) :  super(key: key);
+
+  @override
+  _DaysInMonthState createState() => _DaysInMonthState();
+}
+
+class _DaysInMonthState extends State<DaysInMonth> {
+  PageController _pageController;
+
+  @override
+  initState(){
+    _pageController = new PageController(initialPage: widget.selectedDay - 1, viewportFraction: 0.2);
+    super.initState();
+  }
 
   Widget _buildDayItem(BuildContext context, int position) {
-    DateInfo item = items[position];
-    Color itemTextColor = item.now.day == selectedDay ? Colors.white :
+    DateInfo item = widget.items[position];
+    Color itemTextColor = item.now.day == widget.selectedDay ? Colors.white :
                           (item.now.weekday == 6 || item.now.weekday == 7) ? primaryColor : secondaryColor;
     return Container(
       width: 90.0,
       child: Card(
-        color: item.now.day == selectedDay ? primaryColor : bgDayItem,
+        color: item.now.day == widget.selectedDay ? primaryColor : bgDayItem,
         child: Container(
           padding: EdgeInsets.all(8.0),
           child: Column(
@@ -45,10 +60,10 @@ class DaysInMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
+    return PageView.builder(
+      controller: _pageController,
       itemBuilder: _buildDayItem,
-      itemCount: items.length,
+      itemCount: widget.items.length,
     );
   }
 }
