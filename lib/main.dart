@@ -5,10 +5,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
+import 'package:pageview/pages/calendar/days_in_month.dart';
 import './utils/calendar.dart';
 import './utils/date_picker_vn.dart';
 
 import 'data-bg.dart';
+import 'models/date_info.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,8 +40,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static PageController _pageController = PageController(initialPage: 183);
-  var _previousPage = _pageController.initialPage;
+  List<DateInfo> _daysInMonth = [];
+  double viewPortFraction = 0.2;
+  int currentPage = 183;
+
+//  PageController _pageController;
+//  int _previousPage;
+//  _now = new DateTime(_now.year, _now.month, _now.day + 1);
+
+  @override
+  initState() {
+    super.initState();
+//    _pageController = PageController(initialPage: currentPage, viewportFraction: viewPortFraction);
+//    _previousPage = _pageController.initialPage;
+    DateTime _now = new DateTime.now();
+    var lastDayDateTime = _now.month < 12 ? new DateTime(_now.year, _now.month + 1, 0) : new DateTime(_now.year + 1, 1, 0);
+    for (int i = 1; i <= lastDayDateTime.day; i++) {
+      _daysInMonth.add(new DateInfo(now: new DateTime(_now.year, _now.month, i)));
+    }
+  }
 
   Random random = new Random();
   var _now = new DateTime.now();
@@ -97,20 +116,22 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSolarDay() {
     return Stack(
       children: <Widget>[
-//        Container(
-//          height: MediaQuery.of(context).size.height / 2 - 40,
-//          color: _now.weekday == 6 || _now.weekday == 7
-//              ? Colors.blueAccent
-//              : Theme.of(context).primaryColor,
+        Container(
+          height: MediaQuery.of(context).size.height,
+          //color: Colors.green,
+          color: _now.weekday == 6 || _now.weekday == 7
+              ? Colors.blueAccent
+              : Theme.of(context).primaryColor,
 //          padding:
 //              EdgeInsets.only(right: 10.0, bottom: 0.0, left: 10.0, top: 0.0),
-//          child: SvgPicture.asset(
-//            // Todo not random, from 1 to 31 and depend on season
-//            assetsSvgBackground[random.nextInt(assetsSvgBackground.length)],
-//            fit: BoxFit.fitWidth,
-//            semanticsLabel: '',
-//          ),
-//        ),
+          child: SvgPicture.asset(
+            // Todo not random, from 1 to 31 and depend on season
+            assetsSvgBackground[random.nextInt(assetsSvgBackground.length)],
+            //assetsSvgBackground[15],
+            fit: BoxFit.fitWidth,
+            semanticsLabel: '',
+          ),
+        ),
         Container(
           height: MediaQuery.of(context).size.height / 2 - 40,
           //padding: EdgeInsets.only(bottom: 10.0),
@@ -215,98 +236,140 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        itemCount: 365,
-        itemBuilder: (context, position) {
-          return Container(
-            child: Column(
-              children: <Widget>[
-                _buildSolarDay(),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Chip(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            label: Text(
-                              'Lịch âm - Năm ' + CalendarUtils.getCanChiOfYear(_lunar.lunarYear),
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Text("Ngày"),
-                                  Text("${_lunar.lunarDay}", style: TextStyle(
-                                      color: _lunar.lunarDay == 15 || _lunar.lunarDay == 1
-                                          ? Theme.of(context).primaryColor
-                                          : Colors.blueAccent,
-                                      fontSize: 100.0,
-                                      fontWeight: FontWeight.bold)),
-                                  Text(CalendarUtils.getCanChiOfDay(
-                                      _now.day, _now.month, _now.year), style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Text("Tháng"),
-                                  Text("${_lunar.lunarMonth}", style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 100.0,
-                                      fontWeight: FontWeight.bold)),
-                                  Text(CalendarUtils.getCanChiOfMonth(
-                                      _lunar.lunarYear, _lunar.lunarMonth), style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-              ],
+//      body: PageView.builder(
+//        controller: _pageController,
+//        itemCount: 365,
+//        itemBuilder: (context, position) {
+//          return Container(
+//           // margin: EdgeInsets.only(left: 8.0, right: 8.0),
+//            child: Column(
+//              children: <Widget>[
+//                Flexible(
+//                  flex: 4,
+//                  child: _buildSolarDay(),
+//                ),
+//                Flexible(
+//                  flex: 3,
+//                  child: Column(
+//                    mainAxisAlignment: MainAxisAlignment.start,
+//                    children: <Widget>[
+//                      Row(
+//                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                        children: <Widget>[
+//                          Chip(
+//                            backgroundColor: Theme.of(context).primaryColor,
+//                            label: Text(
+//                              'Lịch âm - Năm ' + CalendarUtils.getCanChiOfYear(_lunar.lunarYear),
+//                              style: TextStyle(
+//                                color: Colors.white,
+//                              ),
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                      Expanded(
+//                        child: Container(
+//                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                            children: <Widget>[
+//                              Column(
+//                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                                children: <Widget>[
+//                                  Text("Ngày"),
+//                                  Text("${_lunar.lunarDay}", style: TextStyle(
+//                                      color: _lunar.lunarDay == 15 || _lunar.lunarDay == 1
+//                                          ? Theme.of(context).primaryColor
+//                                          : Colors.blueAccent,
+//                                      fontSize: 100.0,
+//                                      fontWeight: FontWeight.bold)),
+//                                  Text(CalendarUtils.getCanChiOfDay(
+//                                      _now.day, _now.month, _now.year), style: TextStyle(
+//                                      color: Colors.blueAccent,
+//                                      fontSize: 22.0,
+//                                      fontWeight: FontWeight.bold)),
+//                                ],
+//                              ),
+//                              Column(
+//                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                                children: <Widget>[
+//                                  Text("Tháng"),
+//                                  Text("${_lunar.lunarMonth}", style: TextStyle(
+//                                      color: Colors.blueAccent,
+//                                      fontSize: 100.0,
+//                                      fontWeight: FontWeight.bold)),
+//                                  Text(CalendarUtils.getCanChiOfMonth(
+//                                      _lunar.lunarYear, _lunar.lunarMonth), style: TextStyle(
+//                                      color: Colors.blueAccent,
+//                                      fontSize: 22.0,
+//                                      fontWeight: FontWeight.bold)),
+//                                ],
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                      ),
+//
+//                    ],
+//                  ),
+//                ),
+//              ],
+//            ),
+//          );
+//        },
+//        onPageChanged: (int position) {
+//          setState(() {
+//            if (_previousPage < position) {
+//              _now = new DateTime(_now.year, _now.month, _now.day + 1);
+//            } else {
+//              _now = new DateTime(_now.year, _now.month, _now.day - 1);
+//            }
+//            Solar solar = Solar(
+//                solarYear: _now.year,
+//                solarMonth: _now.month,
+//                solarDay: _now.day);
+//            _lunar = LunarSolarConverter.solarToLunar(solar);
+//            _previousPage = position;
+//          });
+//          // Todo case position = 0 and max-page
+//        },
+//      ),
+    body: Container(
+      child: Column(
+        children: <Widget>[
+          // Days
+          Flexible(
+            flex: 2,
+            child: Container(
+              //color: Colors.green,
+              child: DaysInMonth(_daysInMonth),
             ),
-          );
-        },
-        onPageChanged: (int position) {
-          setState(() {
-            if (_previousPage < position) {
-              _now = new DateTime(_now.year, _now.month, _now.day + 1);
-            } else {
-              _now = new DateTime(_now.year, _now.month, _now.day - 1);
-            }
-            Solar solar = Solar(
-                solarYear: _now.year,
-                solarMonth: _now.month,
-                solarDay: _now.day);
-            _lunar = LunarSolarConverter.solarToLunar(solar);
-            _previousPage = position;
-          });
-          // Todo case position = 0 and max-page
-        },
+          ),
+
+          // Illustrations
+          Flexible(
+            flex: 1,
+            child: Container(
+              child: SvgPicture.asset(
+                assetsSvgBackground[1],
+               // height: 60.0,
+                //width: double.infinity,
+                fit: BoxFit.fitWidth,
+          //      color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+
+          // Lunar Info
+          Expanded(
+            child: Container(
+              child: Column(
+
+              ),
+            ),
+          ),
+        ],
       ),
+    ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(

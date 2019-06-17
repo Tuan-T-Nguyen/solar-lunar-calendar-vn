@@ -61,6 +61,7 @@ flutter:
     - assets/svg/background/13.svg
     - assets/svg/background/14.svg
     - assets/svg/background/15.svg
+    - assets/svg/background/16.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
