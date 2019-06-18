@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_svg: ^0.13.0+2
   lunar_calendar_converter: ^1.0.4+1
+  provider: ^2.0.0
 
 dev_dependencies:
   flutter_test:
