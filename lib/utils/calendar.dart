@@ -89,4 +89,9 @@ class CalendarUtils {
     }
     return jd.toInt();
   }
+
+  // http://azone.vn/ngay-hoang-dao-ngay-hac-dao-gio-hoang-dao-gio-hac-dao-la-gi-d68825
+  static List<String> getHourOfHoangDao(int lunarDay) {
+
+  }
 }

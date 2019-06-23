@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../data-bg.dart';
 import 'days_in_month.dart';
-import 'illustration_day.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -34,9 +33,9 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => DateModel(),
-      child: Container(
+   // return ChangeNotifierProvider(
+   //   builder: (context) => DateModel(),
+      return Container(
         color: Colors.white,
         child: Column(
           children: <Widget>[
@@ -44,91 +43,164 @@ class _CalendarPageState extends State<CalendarPage> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 8.0),
               height: 130.0,
-              child: DaysInMonth(
-                items: _daysInMonth,
-                selectedDay: 12,
+              child: Consumer<DateModel>(
+                builder: (context, dateModel, child) {
+                  return DaysInMonth(
+                    items: _daysInMonth,
+                    selectedDay: dateModel.getNow().day,
+                  );
+                },
               ),
             ),
 
             // Illustrations
-           IllustrationDay(),
-
+            new IllustrationDay(),
 
             // Lunar Info
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Chip(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          label: Text(
-                            'Năm ' + _selectedDateInfo.getCanChiYear(),
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Text("Ngày"),
-                                Text("${_selectedDateInfo.solarToLunar().lunarDay}",
-                                    style: TextStyle(
-                                        color: _selectedDateInfo.solarToLunar().lunarDay == 15 ||
-                                            _selectedDateInfo.solarToLunar().lunarDay == 1
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.blueAccent,
-                                        fontSize: 100.0,
-                                        fontWeight: FontWeight.bold)),
-                                Text(
-                                    _selectedDateInfo.getCanChiDay(),
-                                    style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Text("Tháng"),
-                                Text("${_selectedDateInfo.solarToLunar().lunarMonth}",
-                                    style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 100.0,
-                                        fontWeight: FontWeight.bold)),
-                                Text(
-                                    _selectedDateInfo.getCanChiMonth(),
-                                    style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
+            new LunarInfo(),
           ],
         ),
+      );
+   // );
+  }
+}
+
+class IllustrationDay extends StatelessWidget {
+  const IllustrationDay({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120.0,
+      margin: EdgeInsets.only(bottom: 10.0),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              color: Theme.of(context).primaryColor,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    offset: Offset(3.0, 3.0),
+                    color: Colors.grey,
+                    blurRadius: 4.0),
+              ],
+            ),
+            height: 80.0,
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SvgPicture.asset(
+                  assetsSvgBackground[3],
+                  height: 120.0,
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 40.0, right: 4.0),
+                    height: 80.0,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Ngày quốc tế ông già, đàn ông, con trai, bé trai.",
+                      style: TextStyle(
+                        color: Colors.white,
+                        //  fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
+class LunarInfo extends StatelessWidget {
+  const LunarInfo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<DateModel>(
+      builder: (context, dateModel, child) {
+        return Expanded(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Chip(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      label: Text(
+                        'Năm ' + dateModel.getCanChiYear(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Text("Ngày"),
+                            Text("${dateModel.solarToLunar().lunarDay}",
+                                style: TextStyle(
+                                    color: dateModel.solarToLunar().lunarDay ==
+                                                15 ||
+                                            dateModel.solarToLunar().lunarDay ==
+                                                1
+                                        ? Theme.of(context).primaryColor
+                                        : Colors.blueAccent,
+                                    fontSize: 100.0,
+                                    fontWeight: FontWeight.bold)),
+                            Text(dateModel.getCanChiDay(),
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Text("Tháng"),
+                            Text("${dateModel.solarToLunar().lunarMonth}",
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 100.0,
+                                    fontWeight: FontWeight.bold)),
+                            Text(dateModel.getCanChiMonth(),
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

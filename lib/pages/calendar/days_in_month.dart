@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 class DaysInMonth extends StatefulWidget {
 
@@ -22,7 +23,7 @@ class _DaysInMonthState extends State<DaysInMonth> {
 
   @override
   initState(){
-    _pageController = new PageController(initialPage: widget.selectedDay - 1, viewportFraction: 0.30);
+    _pageController = new PageController(viewportFraction: 0.30);
     super.initState();
   }
 
@@ -34,11 +35,11 @@ class _DaysInMonthState extends State<DaysInMonth> {
     Color itemTextColor = solarDay == widget.selectedDay ? Colors.white :
                           (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
     return Container(
-      //width: 90.0,
+      color: Colors.white,
       margin: EdgeInsets.symmetric(horizontal: 3.0),
       child: GestureDetector(
         onTap: () {
-          print("$solarDay");
+          Provider.of<DateModel>(context, listen: false).setNow(item.solarDateTime);
         },
         child: Card(
           elevation: 3,
@@ -68,6 +69,9 @@ class _DaysInMonthState extends State<DaysInMonth> {
 
   @override
   Widget build(BuildContext context) {
+//    if (widget.selectedDay != null && widget.selectedDay > 0) {
+//      _pageController.animateToPage(widget.selectedDay - 1, duration: Duration(milliseconds: 500), curve: Curves.ease);
+//    }
     return PageView.builder(
       pageSnapping: false,
       controller: _pageController,
