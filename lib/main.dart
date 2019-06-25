@@ -68,9 +68,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
+    super.initState();
     _tabController = TabController(length: _tabList.length, vsync: this);
     _tabController.addListener(_handleTabSelection);
-    super.initState();
   }
 
   @override
@@ -91,7 +91,6 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: TabBarView(
           controller: _tabController,
           children: _tabList,

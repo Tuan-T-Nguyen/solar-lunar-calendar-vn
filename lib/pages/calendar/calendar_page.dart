@@ -11,57 +11,84 @@ class CalendarPage extends StatefulWidget {
   _CalendarPageState createState() => _CalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> {
-  List<DateItem> _daysInMonth = [];
+class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  Animation<double> _heightFactorAnimation;
+  double collapsedHeightFactor = 0.9;
+  double expandedHeightFactor = 0.5;
+  bool isAnimatedComplete = false;
+  double screenHeight = 0;
 
   @override
   void initState() {
-    _daysInMonth = setDaysInMonth(new DateTime.now());
     super.initState();
-  }
-
-  List<DateItem> setDaysInMonth(DateTime _now) {
-    List<DateItem> daysInMonth = [];
-    var lastDayDateTime = _now.month < 12
-        ? new DateTime(_now.year, _now.month + 1, 0)
-        : new DateTime(_now.year + 1, 1, 0);
-    for (int i = 1; i <= lastDayDateTime.day; i++) {
-      daysInMonth.add(new DateItem(new DateTime(_now.year, _now.month, i)));
-    }
-    return daysInMonth;
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _heightFactorAnimation = Tween<double>(begin: collapsedHeightFactor, end: expandedHeightFactor).animate(_animationController);
   }
 
   @override
-  Widget build(BuildContext context) {
-   // return ChangeNotifierProvider(
-   //   builder: (context) => DateModel(),
-      return Container(
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            // Days
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0),
-              height: 130.0,
-              child: Consumer<DateModel>(
-                builder: (context, dateModel, child) {
-                  return DaysInMonth(
-                    items: _daysInMonth,
-                    selectedDay: dateModel.getNow().day,
-                  );
-                },
-              ),
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+  
+  Widget getWidget() {
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        FractionallySizedBox(
+          alignment: Alignment.topCenter,
+          heightFactor: _heightFactorAnimation.value,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                // Days
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  height: 130.0,
+                  child: Consumer<DateModel>(
+                    builder: (context, dateModel, child) {
+                      return DaysInMonth(
+                        dateTimeSelected: dateModel.getNow(),
+                      );
+                    },
+                  ),
+                ),
+
+                // Illustrations
+                new IllustrationDay(),
+              ],
             ),
-
-            // Illustrations
-            new IllustrationDay(),
-
-            // Lunar Info
-            new LunarInfo(),
-          ],
+          ),
         ),
-      );
-   // );
+        GestureDetector(
+          onTap: () {},
+          child: FractionallySizedBox(
+            alignment: Alignment.bottomCenter,
+            // heightFactor: _heightFactorAnimation.value,
+            heightFactor: 0.5,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFEEEEEE),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+              ),
+              child: new LunarInfo(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, widget) {
+        return getWidget();
+      }
+    );
   }
 }
 
@@ -131,8 +158,8 @@ class LunarInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DateModel>(
       builder: (context, dateModel, child) {
-        return Expanded(
-          child: Container(
+        return
+          Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -198,8 +225,7 @@ class LunarInfo extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        );
+          );
       },
     );
   }
