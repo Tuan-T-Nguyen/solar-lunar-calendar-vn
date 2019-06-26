@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color(0xFFff6347),
+        primaryColor: Color(0xFFF84655),
       ),
       home: HomePage(),
       debugShowCheckedModeBanner: false,
@@ -83,14 +83,26 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: GestureDetector(
           child: _buildMonthYear(),
           onTap: () => _selectDate(context),
         ),
       ),
+      //appBar: null,
       body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFf84655),
+                  Color(0xFFf69390),
+                  Color(0xFFf08069),
+                ]
+            )
+        ),
         child: TabBarView(
           controller: _tabController,
           children: _tabList,

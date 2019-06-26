@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,9 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent
+    ));
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _heightFactorAnimation = Tween<double>(begin: collapsedHeightFactor, end: expandedHeightFactor).animate(_animationController);
   }
@@ -31,24 +35,30 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
     _animationController.dispose();
     super.dispose();
   }
-  
+
+
   Widget getWidget() {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
         FractionallySizedBox(
           alignment: Alignment.topCenter,
-          heightFactor: _heightFactorAnimation.value,
+          heightFactor: 0.5,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            color: Colors.white,
+            color: Colors.transparent,
             child: Column(
               children: <Widget>[
+
+                // date time selection
+//                Container(
+//                  margin: EdgeInsets.only(top: 20.0),
+//                  height: 40.0,
+//                  child: _buildMonthYear(),
+//                ),
                 // Days
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  margin: EdgeInsets.only(bottom: 8.0),
                   height: 130.0,
-//                  child: new DaysInMonth(dateTimeSelected: new DateTime.now(),),
                   child: Consumer<DateModel>(
                     builder: (context, dateModel, child) {
                       return DaysInMonth(
@@ -91,6 +101,28 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
       }
     );
   }
+
+  Widget _buildMonthYear() {
+    return Consumer<DateModel>(
+      builder: (context, dateModel, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Tháng ${dateModel.getNow().month} - ${dateModel.getNow().year}",
+              style: TextStyle(
+                color: Colors.blueAccent,
+              ),
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Colors.blueAccent,
+            )
+          ],
+        );
+      },
+    );
+  }
 }
 
 class IllustrationDay extends StatelessWidget {
@@ -102,7 +134,8 @@ class IllustrationDay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120.0,
-      margin: EdgeInsets.only(bottom: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: EdgeInsets.only(bottom: 8.0),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
@@ -113,8 +146,8 @@ class IllustrationDay extends StatelessWidget {
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     offset: Offset(3.0, 3.0),
-                    color: Colors.grey,
-                    blurRadius: 4.0),
+                    color: Colors.black38,
+                    blurRadius: 10.0),
               ],
             ),
             height: 80.0,
