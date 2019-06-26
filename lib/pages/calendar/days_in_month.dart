@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/utils/calendar.dart';
@@ -22,14 +20,24 @@ class _DaysInMonthState extends State<DaysInMonth> {
 
   ScrollController _scrollController;
   final itemSize = 100.0;
+  DateTime mDateTimeSelected;
 
   @override
   initState(){
-    _scrollController = ScrollController(initialScrollOffset: itemSize * widget.dateTimeSelected.day);
+    mDateTimeSelected = widget.dateTimeSelected;
+    _scrollController = ScrollController(
+      initialScrollOffset: itemSize * mDateTimeSelected.day - itemSize,
+    );
     super.initState();
   }
 
-  Future<List<DateItem>> _getDaysInMonth(DateTime dateTime) async {
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  List<DateItem> _getDaysInMonth(DateTime dateTime) {
     List<DateItem> daysInMonth = [];
     var lastDayDateTime = dateTime.month < 12
         ? new DateTime(dateTime.year, dateTime.month + 1, 0)
@@ -40,79 +48,68 @@ class _DaysInMonthState extends State<DaysInMonth> {
     return daysInMonth;
   }
 
-  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
-    List<DateItem> items = snapshot.data;
+  Widget _buildRow(DateItem dateItem) {
 
+    int solarDay = dateItem.solarDateTime.day;
+    int weekDay = dateItem.solarDateTime.weekday;
+
+    Color itemTextColor = solarDay == mDateTimeSelected.day ? Colors.white :
+    (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
+
+    return Container(
+      color: Colors.white,
+      width: 100,
+      margin: EdgeInsets.symmetric(horizontal: 3.0),
+      child: GestureDetector(
+        onTap: () {
+          if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
+            Provider.of<DateModel>(context, listen: false).setNow(dateItem.solarDateTime);
+            setState(() {
+              mDateTimeSelected = dateItem.solarDateTime;
+            });
+          }
+        },
+        child: Card(
+          elevation: 3,
+          color: solarDay == mDateTimeSelected.day ? primaryColor : bgDayItem,
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(solarDay.toString(), style: TextStyle(
+                  color: itemTextColor,
+                  fontSize: Theme.of(context).textTheme.display1.fontSize,
+                  fontWeight: FontWeight.bold,
+                ),),
+                Text(CalendarUtils.getDayStringBy(weekDay), style: TextStyle(
+                  color: itemTextColor,
+                  fontSize: Theme.of(context).textTheme.subtitle.fontSize,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _createListView() {
+    List<DateItem> items = _getDaysInMonth(mDateTimeSelected);
     return new ListView.builder(
       controller: _scrollController,
       scrollDirection: Axis.horizontal,
       itemCount: items.length,
-//      itemExtent: itemSize,
-//      shrinkWrap: true,
       itemBuilder: (BuildContext context, int position) {
-        DateItem item = items[position];
-        int solarDay = item.solarDateTime.day;
-        int weekDay = item.solarDateTime.weekday;
-
-        Color itemTextColor = solarDay == widget.dateTimeSelected.day ? Colors.white :
-        (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
-
-        return Container(
-          color: Colors.white,
-          width: 100,
-          margin: EdgeInsets.symmetric(horizontal: 3.0),
-          child: GestureDetector(
-            onTap: () {
-              Provider.of<DateModel>(context, listen: false).setNow(item.solarDateTime);
-            },
-            child: Card(
-              elevation: 3,
-              color: solarDay == widget.dateTimeSelected.day ? primaryColor : bgDayItem,
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text(solarDay.toString(), style: TextStyle(
-                      color: itemTextColor,
-                      fontSize: Theme.of(context).textTheme.display1.fontSize,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                    Text(CalendarUtils.getDayStringBy(weekDay), style: TextStyle(
-                      color: itemTextColor,
-                      fontSize: Theme.of(context).textTheme.subtitle.fontSize,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
+        return _buildRow(items[position]);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
-    var futureBuilder = new FutureBuilder(
-      future: _getDaysInMonth(widget.dateTimeSelected),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return new Text('loading...');
-          default:
-            // Default is done
-            if (snapshot.hasError)
-              return new Text('Error: ${snapshot.error}');
-            else
-              return createListView(context, snapshot);
-        }
-      },
-    );
-
-    return futureBuilder;
+    return _createListView();
   }
+
 }

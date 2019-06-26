@@ -48,6 +48,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 8.0),
                   height: 130.0,
+//                  child: new DaysInMonth(dateTimeSelected: new DateTime.now(),),
                   child: Consumer<DateModel>(
                     builder: (context, dateModel, child) {
                       return DaysInMonth(
