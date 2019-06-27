@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pageview/models/date_info.dart';
+import 'package:pageview/utils/theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../data-bg.dart';
@@ -23,9 +24,6 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent
-    ));
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _heightFactorAnimation = Tween<double>(begin: collapsedHeightFactor, end: expandedHeightFactor).animate(_animationController);
   }
@@ -48,13 +46,6 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
             color: Colors.transparent,
             child: Column(
               children: <Widget>[
-
-                // date time selection
-//                Container(
-//                  margin: EdgeInsets.only(top: 20.0),
-//                  height: 40.0,
-//                  child: _buildMonthYear(),
-//                ),
                 // Days
                 Container(
                   margin: EdgeInsets.only(bottom: 8.0),
@@ -82,7 +73,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
             heightFactor: 0.5,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFFEEEEEE),
+                color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
               ),
               child: new LunarInfo(),
@@ -99,28 +90,6 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
       builder: (context, widget) {
         return getWidget();
       }
-    );
-  }
-
-  Widget _buildMonthYear() {
-    return Consumer<DateModel>(
-      builder: (context, dateModel, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Tháng ${dateModel.getNow().month} - ${dateModel.getNow().year}",
-              style: TextStyle(
-                color: Colors.blueAccent,
-              ),
-            ),
-            Icon(
-              Icons.arrow_drop_down,
-              color: Colors.blueAccent,
-            )
-          ],
-        );
-      },
     );
   }
 }
@@ -142,7 +111,7 @@ class IllustrationDay extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
-              color: Theme.of(context).primaryColor,
+              color: Colors.white,
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     offset: Offset(3.0, 3.0),
@@ -168,7 +137,8 @@ class IllustrationDay extends StatelessWidget {
                     child: Text(
                       "Ngày quốc tế ông già, đàn ông, con trai, bé trai.",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: secondaryColor,
+                        fontWeight: FontWeight.bold,
                         //  fontSize: 12.0,
                       ),
                     ),

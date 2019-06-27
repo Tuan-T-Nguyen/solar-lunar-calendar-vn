@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pageview/utils/date_picker_vn.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent
+    ));
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: Color(0xFFF84655),
+        scaffoldBackgroundColor: Colors.transparent,
+
       ),
       home: HomePage(),
       debugShowCheckedModeBanner: false,
@@ -83,7 +89,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0,
         title: GestureDetector(
           child: _buildMonthYear(),
@@ -142,12 +148,12 @@ class _HomePageState extends State<HomePage>
             Text(
               "Tháng ${dateModel.getNow().month} - ${dateModel.getNow().year}",
               style: TextStyle(
-                color: Colors.blueAccent,
+                color: Colors.white,
               ),
             ),
             Icon(
               Icons.arrow_drop_down,
-              color: Colors.blueAccent,
+              color: Colors.white,
             )
           ],
         );

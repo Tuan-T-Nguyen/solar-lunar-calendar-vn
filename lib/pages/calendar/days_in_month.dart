@@ -54,15 +54,16 @@ class _DaysInMonthState extends State<DaysInMonth> {
     int weekDay = dateItem.solarDateTime.weekday;
     bool isSelected = solarDay == mDateTimeSelected.day;
 
-    Color itemTextColor = solarDay == mDateTimeSelected.day ? Colors.white :
-    (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
+//    Color itemTextColor = solarDay == mDateTimeSelected.day ? Colors.white :
+//    (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
+    Color itemTextColor = (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
 
     return AnimatedContainer(
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 700),
       curve: Curves.ease,
       color: Colors.transparent,
       width: 100,
-      margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 15.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 15.0),
+      margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 18.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 18.0),
       child: GestureDetector(
         onTap: () {
           if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
@@ -77,7 +78,8 @@ class _DaysInMonthState extends State<DaysInMonth> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          color: isSelected ? primaryColor : bgDayItem,
+          //color: isSelected ? primaryColor : Colors.white,
+          color: Colors.white,
           child: Container(
             padding: EdgeInsets.all(8.0),
             child: Column(
