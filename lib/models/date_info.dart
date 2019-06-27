@@ -30,6 +30,19 @@ class DateModel extends ChangeNotifier {
     Solar solar = Solar(solarYear: _now.year, solarMonth: _now.month, solarDay: _now.day);
     return LunarSolarConverter.solarToLunar(solar);
   }
+
+  String getHoursOfHoangDao() {
+    List<String> hourList = CalendarUtils.getHourOfHoangDao(_now);
+    String result = "";
+    for(String hoangdao in hourList) {
+      result += hoangdao + ", ";
+    }
+    result = result.trim();
+    if (result.endsWith(",")) {
+      result = result.substring(0, result.length - 1);
+    }
+    return result;
+  }
 }
 
 @immutable

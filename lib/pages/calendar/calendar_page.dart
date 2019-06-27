@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/utils/theme.dart';
@@ -13,27 +12,16 @@ class CalendarPage extends StatefulWidget {
   _CalendarPageState createState() => _CalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _heightFactorAnimation;
-  double collapsedHeightFactor = 0.9;
-  double expandedHeightFactor = 0.5;
-  bool isAnimatedComplete = false;
-  double screenHeight = 0;
-
+class _CalendarPageState extends State<CalendarPage> {
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _heightFactorAnimation = Tween<double>(begin: collapsedHeightFactor, end: expandedHeightFactor).animate(_animationController);
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
     super.dispose();
   }
-
 
   Widget getWidget() {
     return Stack(
@@ -41,7 +29,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
       children: <Widget>[
         FractionallySizedBox(
           alignment: Alignment.topCenter,
-          heightFactor: 0.5,
+          heightFactor: 0.7,
           child: Container(
             color: Colors.transparent,
             child: Column(
@@ -49,7 +37,7 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
                 // Days
                 Container(
                   margin: EdgeInsets.only(bottom: 8.0),
-                  height: 130.0,
+                  height: HEIGHT_DAYS_IN_MONTH,
                   child: Consumer<DateModel>(
                     builder: (context, dateModel, child) {
                       return DaysInMonth(
@@ -65,32 +53,16 @@ class _CalendarPageState extends State<CalendarPage> with SingleTickerProviderSt
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: FractionallySizedBox(
-            alignment: Alignment.bottomCenter,
-            // heightFactor: _heightFactorAnimation.value,
-            heightFactor: 0.5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
-              ),
-              child: new LunarInfo(),
-            ),
-          ),
+        BottomSheetLunar(
+          screenSize: MediaQuery.of(context).size,
         ),
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, widget) {
-        return getWidget();
-      }
-    );
+    return getWidget();
   }
 }
 
@@ -110,7 +82,8 @@ class IllustrationDay extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(borderRadiusCommon)),
               color: Colors.white,
               boxShadow: <BoxShadow>[
                 BoxShadow(
@@ -162,75 +135,192 @@ class LunarInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DateModel>(
       builder: (context, dateModel, child) {
-        return
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Row(
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Chip(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      label: Text(
-                        'Năm ' + dateModel.getCanChiYear(),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text("Ngày", style: TextStyle(fontSize: 16.0),),
+                        Text("${dateModel.solarToLunar().lunarDay}",
+                            style: TextStyle(
+                                color: dateModel.solarToLunar().lunarDay ==
+                                    15 ||
+                                    dateModel.solarToLunar().lunarDay == 1
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.blueAccent,
+                                fontSize: 100.0,
+                                fontWeight: FontWeight.bold)),
+                        Text(dateModel.getCanChiDay(),
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text("Tháng", style: TextStyle(fontSize: 16.0),),
+                        Text("${dateModel.solarToLunar().lunarMonth}",
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 100.0,
+                                fontWeight: FontWeight.bold)),
+                        Text(dateModel.getCanChiMonth(),
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold)),
+                      ],
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text("Ngày"),
-                            Text("${dateModel.solarToLunar().lunarDay}",
-                                style: TextStyle(
-                                    color: dateModel.solarToLunar().lunarDay ==
-                                                15 ||
-                                            dateModel.solarToLunar().lunarDay ==
-                                                1
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.blueAccent,
-                                    fontSize: 100.0,
-                                    fontWeight: FontWeight.bold)),
-                            Text(dateModel.getCanChiDay(),
-                                style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text("Tháng"),
-                            Text("${dateModel.solarToLunar().lunarMonth}",
-                                style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 100.0,
-                                    fontWeight: FontWeight.bold)),
-                            Text(dateModel.getCanChiMonth(),
-                                style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ],
-                    ),
+              ),
+              // Hours of Hoang Dao
+              Container(
+               // color: Colors.green,
+                height: 150,
+              ),
+              Container(
+               // color: Colors.blueAccent,
+                height: 150,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class BottomSheetLunar extends StatefulWidget {
+  //BuildContext context;
+  final Size screenSize;
+  BottomSheetLunar({Key key, this.screenSize}) : super(key: key);
+  @override
+  _BottomSheetLunarState createState() => _BottomSheetLunarState();
+}
+
+class _BottomSheetLunarState extends State<BottomSheetLunar>
+    with SingleTickerProviderStateMixin {
+  double sheetTop = HEIGHT_DAYS_IN_MONTH + 10;
+  Animation<double> animation;
+  // Link: https://www.youtube.com/watch?v=80vWzQB0Eto&t=1113s
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    animation =
+        Tween<double>(begin: widget.screenSize.height / 2 - 80, end: sheetTop)
+            .animate(CurvedAnimation(
+                parent: _animationController,
+                curve: Curves.ease,
+                reverseCurve: Curves.easeInOut))
+              ..addListener(() {
+                setState(() {});
+              });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: animation.value,
+          left: 0,
+          child: GestureDetector(
+            onTap: () {
+              _animationController.isCompleted
+                  ? _animationController.forward()
+                  : _animationController.reverse();
+            },
+//            onVerticalDragEnd: (DragEndDetails dragEndDetails) {
+//              // upward drag
+//              if (dragEndDetails.primaryVelocity < 0.0) {
+//                _animationController.reverse();
+//              } else if (dragEndDetails.primaryVelocity > 0.0) {
+//                _animationController.forward();
+//              } else {
+//                return;
+//              }
+//            },
+            child: BottomSheetContainer(),
+          ),
+        ),
+        Positioned(
+          top: animation.value - 22,
+          child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            child: Consumer<DateModel>(builder: (context, dateModel, child) {
+              return Chip(
+                backgroundColor: Theme.of(context).primaryColor,
+                label: Text(
+                  'Năm ' + dateModel.getCanChiYear(),
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
+              );
+            }),
+          ),
+        ),
+        Positioned(
+          bottom: 10,
+          child: FloatingActionButton(
+            onPressed: () {
+              _animationController.isCompleted
+                  ? _animationController.reverse()
+                  : _animationController.forward();
+            },
+            child: Icon(_animationController.isCompleted ? Icons.arrow_downward : Icons.arrow_upward),
+            mini: true,
+            backgroundColor: primaryColor,
+
+          ),
+        ),
+      ],
+    );
+    //return
+  }
+}
+
+class BottomSheetContainer extends StatelessWidget {
+  double sheetItemHeight = 110;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 25),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+           // child: LunarInfo(),
+            child: ListView(
+              children: <Widget>[
+                LunarInfo(),
+                SizedBox(height: 320,)
               ],
             ),
-          );
-      },
+          ),
+          // LunarInfo(),
+        ],
+      ),
     );
   }
 }

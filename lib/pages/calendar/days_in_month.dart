@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/theme.dart';
 import 'package:provider/provider.dart';
+
+import '../../data-bg.dart';
 
 class DaysInMonth extends StatefulWidget {
 
@@ -74,14 +77,15 @@ class _DaysInMonthState extends State<DaysInMonth> {
           }
         },
         child: Card(
-          elevation: 3,
+          elevation: isSelected ? 12 : 3,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(borderRadiusCommon),
           ),
           //color: isSelected ? primaryColor : Colors.white,
           color: Colors.white,
           child: Container(
             padding: EdgeInsets.all(8.0),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[

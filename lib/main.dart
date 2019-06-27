@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pageview/utils/date_picker_vn.dart';
+import 'package:pageview/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'models/date_info.dart';
 import 'pages/calendar/calendar_page.dart';
@@ -115,6 +116,7 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
           currentIndex: _currentTabIndex,
           onTap: (index) {
             setState(() {
