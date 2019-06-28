@@ -30,9 +30,8 @@ class _CalendarPageState extends State<CalendarPage> {
       children: <Widget>[
         FractionallySizedBox(
           alignment: Alignment.topCenter,
-          heightFactor: 0.7,
+          heightFactor: 0.6,
           child: Container(
-            color: Colors.transparent,
             child: Column(
               children: <Widget>[
                 // Days

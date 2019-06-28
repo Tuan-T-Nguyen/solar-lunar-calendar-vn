@@ -134,31 +134,37 @@ class CalendarUtils {
 
   static List<String> getHourOfHacDao(DateTime solarDateTime) {
     String chiOfDay = getChiOfDay(solarDateTime.day, solarDateTime.month, solarDateTime.year);
-    List<String> result = new List<String>();
+    List<String> result;
     switch (chiOfDay) {
       case DAN:
       case THAN:
-        result.add(DAN); result.add(MAO); result.add(NGO); result.add(THAN); result.add(DAU); result.add(HOI);
+        result = [DAN, MAO, NGO, THAN, DAU, HOI];
+        //result.add(DAN); result.add(MAO); result.add(NGO); result.add(THAN); result.add(DAU); result.add(HOI);
         break;
       case MAO:
       case DAU:
-        result.add(SUU); result.add(THIN); result.add(TI); result.add(THAN); result.add(TUAT); result.add(HOI);
+        result = [SUU, THIN, TI, THAN, TUAT, HOI];
+        //result.add(SUU); result.add(THIN); result.add(TI); result.add(THAN); result.add(TUAT); result.add(HOI);
         break;
       case THIN:
       case TUAT:
-        result.add(TY); result.add(SUU); result.add(MAO); result.add(NGO); result.add(MUI); result.add(TUAT);
+        result = [TY, SUU, MAO, NGO, MUI, TUAT];
+        //result.add(TY); result.add(SUU); result.add(MAO); result.add(NGO); result.add(MUI); result.add(TUAT);
         break;
       case TI:
       case HOI:
-        result.add(TY); result.add(DAN); result.add(MAO); result.add(TI); result.add(THAN); result.add(DAU);
+        result = [TY, DAN, MAO, TI, THAN, DAU];
+        //result.add(TY); result.add(DAN); result.add(MAO); result.add(TI); result.add(THAN); result.add(DAU);
         break;
       case TY:
       case NGO:
-        result.add(DAN); result.add(THIN); result.add(TI); result.add(MUI); result.add(TUAT); result.add(HOI);
+        result = [DAN, THIN, TI, MUI, TUAT, HOI];
+        //result.add(DAN); result.add(THIN); result.add(TI); result.add(MUI); result.add(TUAT); result.add(HOI);
         break;
       case SUU:
       case MUI:
-        result.add(TY); result.add(SUU); result.add(THIN); result.add(NGO); result.add(MUI); result.add(DAU);
+        result = [TY, SUU, THIN, NGO, MUI, DAU];
+        //result.add(TY); result.add(SUU); result.add(THIN); result.add(NGO); result.add(MUI); result.add(DAU);
         break;
       default:
         return [];

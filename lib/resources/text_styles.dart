@@ -10,6 +10,10 @@ const TextStyle appBarTextStyle = TextStyle(
   fontWeight: FontWeight.w900,
 );
 
+const yearLunarTextStyle = TextStyle(
+  color: Colors.white,
+);
+
 const TextStyle dayStyle = TextStyle(
   color: secondaryColor,
   fontSize: size_40,
@@ -39,29 +43,7 @@ const TextStyle illustrationTextStyle = TextStyle(
   fontSize: size_14,
 );
 
-
-
-
-const TextStyle nameStyle = TextStyle(
-  color: Colors.black,
-  fontSize: size_20,
-  fontWeight: FontWeight.w900,
-);
-
-const TextStyle nameBigStyle = TextStyle(
-  color: Colors.white,
-  fontSize: size_40,
-  fontWeight: FontWeight.w800,
-);
-
-const TextStyle descriptionStyle = TextStyle(
-  color: Colors.white,
-  fontSize: size_16,
-  height: 1.2,
-);
-
 const TextStyle descriptionBoldStyle = TextStyle(
-    color: Colors.white,
     fontSize: size_16,
     height: 1.2,
     fontWeight: FontWeight.w800
