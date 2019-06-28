@@ -49,6 +49,5 @@ class DateModel extends ChangeNotifier {
 class DateItem {
   final DateTime solarDateTime;
 
-  DateItem(this.solarDateTime);
-
+  DateItem({@required this.solarDateTime});
 }

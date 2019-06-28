@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pageview/models/date_info.dart';
+import 'package:pageview/resources/sizes.dart';
+import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
-import 'package:pageview/utils/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../../data-bg.dart';
-
-class DaysInMonth extends StatefulWidget {
+class DaysInMonthWidget extends StatefulWidget {
 
   static BuildContext context;
 
   final DateTime dateTimeSelected;
 
-  DaysInMonth({Key key, this.dateTimeSelected}) :  super(key: key);
+  DaysInMonthWidget({Key key, this.dateTimeSelected}) :  super(key: key);
 
   @override
-  _DaysInMonthState createState() => _DaysInMonthState();
+  _DaysInMonthWidgetState createState() => _DaysInMonthWidgetState();
 }
 
-class _DaysInMonthState extends State<DaysInMonth> {
+class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
 
   ScrollController _scrollController;
-  final itemSize = 100.0;
   DateTime mDateTimeSelected;
 
   @override
   initState(){
     mDateTimeSelected = widget.dateTimeSelected;
     _scrollController = ScrollController(
-      initialScrollOffset: itemSize * mDateTimeSelected.day - itemSize,
+      initialScrollOffset: size_100 * mDateTimeSelected.day - size_100,
     );
     super.initState();
   }
@@ -46,7 +43,7 @@ class _DaysInMonthState extends State<DaysInMonth> {
         ? new DateTime(dateTime.year, dateTime.month + 1, 0)
         : new DateTime(dateTime.year + 1, 1, 0);
     for (int i = 1; i <= lastDayDateTime.day; i++) {
-      daysInMonth.add(new DateItem(new DateTime(dateTime.year, dateTime.month, i)));
+      daysInMonth.add(new DateItem(solarDateTime: new DateTime(dateTime.year, dateTime.month, i)));
     }
     return daysInMonth;
   }
@@ -57,15 +54,11 @@ class _DaysInMonthState extends State<DaysInMonth> {
     int weekDay = dateItem.solarDateTime.weekday;
     bool isSelected = solarDay == mDateTimeSelected.day;
 
-//    Color itemTextColor = solarDay == mDateTimeSelected.day ? Colors.white :
-//    (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
-    Color itemTextColor = (weekDay == 6 || weekDay == 7) ? primaryColor : secondaryColor;
-
     return AnimatedContainer(
       duration: Duration(milliseconds: 700),
       curve: Curves.ease,
       color: Colors.transparent,
-      width: 100,
+      width: size_100,
       margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 18.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 18.0),
       child: GestureDetector(
         onTap: () {
@@ -85,20 +78,11 @@ class _DaysInMonthState extends State<DaysInMonth> {
           color: Colors.white,
           child: Container(
             padding: EdgeInsets.all(8.0),
-
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text(solarDay.toString(), style: TextStyle(
-                  color: itemTextColor,
-                  fontSize: Theme.of(context).textTheme.display1.fontSize,
-                  fontWeight: FontWeight.bold,
-                ),),
-                Text(CalendarUtils.getDayStringBy(weekDay), style: TextStyle(
-                  color: itemTextColor,
-                  fontSize: Theme.of(context).textTheme.subtitle.fontSize,
-                  fontWeight: FontWeight.bold,
-                ),),
+                Text("$solarDay", style: (weekDay == 6 || weekDay == 7) ? weekdayStyle : dayStyle),
+                Text(CalendarUtils.getDayStringBy(weekDay), style: (weekDay == 6 || weekDay == 7) ? weekdayTStyle : dayTStyle),
               ],
             ),
           ),
