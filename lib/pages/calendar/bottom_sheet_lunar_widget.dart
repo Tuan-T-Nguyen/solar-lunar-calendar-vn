@@ -41,7 +41,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
   @override
   void dispose() {
     super.dispose();
-    _animationController.dispose();
+    _animationController?.dispose();
   }
 
   @override
@@ -124,16 +124,12 @@ class BottomSheetContainer extends StatelessWidget {
                     SizedBox(
                       height: size_20,
                     ),
-                    Divider(
-                      height: 1,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
                     SizedBox(
                       height: size_20,
                     ),
                     Text(
                       "Giờ Hoàng Đạo".toUpperCase(),
-                      style: descriptionBoldStyle,
+                      style: hourHoangDaoStyle,
                     ),
                     SizedBox(
                       height: size_8,
@@ -141,8 +137,9 @@ class BottomSheetContainer extends StatelessWidget {
                     Container(
                       height: size_100,
                       child: Hour2HDWidget(
-                        hours:
+                        hhDao:
                             CalendarUtils.getHourOfHoangDao(dateModel.getNow()),
+                        bgColor: Colors.green,
                       ),
                     ),
                     SizedBox(
@@ -150,7 +147,7 @@ class BottomSheetContainer extends StatelessWidget {
                     ),
                     Text(
                       "Giờ Hắc Đạo".toUpperCase(),
-                      style: descriptionBoldStyle,
+                      style: hourHacDaoStyle,
                     ),
                     SizedBox(
                       height: size_8,
@@ -158,8 +155,9 @@ class BottomSheetContainer extends StatelessWidget {
                     Container(
                       height: size_100,
                       child: Hour2HDWidget(
-                        hours:
+                        hhDao:
                             CalendarUtils.getHourOfHacDao(dateModel.getNow()),
+                        bgColor: Colors.purple,
                       ),
                     ),
                     SizedBox(

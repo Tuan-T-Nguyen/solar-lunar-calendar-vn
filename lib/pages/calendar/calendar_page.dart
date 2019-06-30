@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
@@ -14,9 +16,20 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+
+  String _timeString;
+
   @override
   void initState() {
+    _timeString = "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
+    Timer.periodic(Duration(seconds:1), (Timer t)=>_getCurrentTime());
     super.initState();
+  }
+
+  void _getCurrentTime()  {
+    setState(() {
+      _timeString = "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
+    });
   }
 
   @override
@@ -49,6 +62,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
                 // Illustrations
                 IllustrationDayWidget(),
+                Text(_timeString),
               ],
             ),
           ),

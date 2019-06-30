@@ -1,41 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:pageview/models/hh_dao.dart';
 import 'package:pageview/resources/sizes.dart';
+import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
 
 class Hour2HDWidget extends StatelessWidget {
+  final List<HHDao> hhDao;
+  final Color bgColor;
+  static const BorderRadius cardBorderRadius =
+      const BorderRadius.all(Radius.circular(size_12));
 
-  final List<String> hours;
-  static const BorderRadius cardBorderRadius = const BorderRadius.all(Radius.circular(size_12));
+  Hour2HDWidget({@required this.hhDao, @required this.bgColor});
 
-  Hour2HDWidget({this.hours});
+  double widthCard = 80.0;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          String path = getIconZodiac(hours[index]);
+          String path = getIconZodiac(hhDao[index].chi);
           return Material(
             elevation: 0,
             borderRadius: cardBorderRadius,
             child: Stack(
               children: <Widget>[
-                Opacity(
-                  opacity: 0.5,
-                  child: ClipRRect(
-                    borderRadius: cardBorderRadius,
-                    child: Image.asset(
-                      path,
-                      height: 100,
-                      width: 80,
-                      fit: BoxFit.fitHeight,
-                    ),
+                ClipRRect(
+                  borderRadius: cardBorderRadius,
+                  child: Image.asset(
+                    path,
+                    height: 100,
+                    width: widthCard,
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
-//                Container(
-//                  color: Colors.black.withOpacity(0.5),
-//                ),
-                Text("asdsd"),
+                Container(
+                  decoration: BoxDecoration(
+                    color: bgColor.withOpacity(0.35),
+                    // color: Colors.transparent,
+                    borderRadius: cardBorderRadius,
+                  ),
+                  height: 100,
+                  width: widthCard,
+                ),
+                Positioned(
+                  top: 0,
+                  child: Container(
+                      width: widthCard,
+                      alignment: Alignment.center,
+                      child: Text(
+                        hhDao[index].chi,
+                        style: descriptionHDBoldStyle,
+                      )),
+                ),
+                Positioned(
+                    bottom: 0,
+                    child: Container(
+                        width: widthCard,
+                        alignment: Alignment.center,
+                        child: Text(hhDao[index].durationHour, style: descriptionHDBoldStyle,))),
               ],
             ),
           );
@@ -45,7 +68,7 @@ class Hour2HDWidget extends StatelessWidget {
             width: size_12,
           );
         },
-        itemCount: hours.length);
+        itemCount: hhDao.length);
   }
 
   String getIconZodiac(String hour) {

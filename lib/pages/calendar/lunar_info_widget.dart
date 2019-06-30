@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
-import 'package:pageview/resources/sizes.dart';
-import 'package:pageview/utils/calendar.dart';
-import 'package:provider/provider.dart';
 
 class LunarInfoWidget extends StatelessWidget {
 

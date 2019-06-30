@@ -48,3 +48,24 @@ const TextStyle descriptionBoldStyle = TextStyle(
     height: 1.2,
     fontWeight: FontWeight.w800
 );
+
+const TextStyle hourHoangDaoStyle = TextStyle(
+    fontSize: size_16,
+    height: 1.2,
+    fontWeight: FontWeight.w800,
+    color: Colors.green,
+);
+
+const TextStyle hourHacDaoStyle = TextStyle(
+  fontSize: size_16,
+  height: 1.2,
+  fontWeight: FontWeight.bold,
+  color: Colors.purple,
+);
+
+const TextStyle descriptionHDBoldStyle = TextStyle(
+    fontSize: size_16,
+    height: 1.2,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+);

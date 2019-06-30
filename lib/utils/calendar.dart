@@ -1,3 +1,5 @@
+import 'package:pageview/models/hh_dao.dart';
+
 class CalendarUtils {
   static List<String> cans = [
     "Giáp",
@@ -97,34 +99,93 @@ class CalendarUtils {
     return jd.toInt();
   }
 
+  static String getDurationHourByChi(String chi) {
+    switch (chi) {
+      case TY: return "23 - 1 giờ";
+      case SUU: return "1 - 3 giờ";
+      case DAN: return "3 - 5 giờ";
+      case MAO: return "5 - 7 giờ";
+      case THIN: return "7 - 9 giờ";
+      case TI: return "9 - 11 giờ";
+      case NGO: return "11 - 13 giờ";
+      case MUI: return "13 - 15 giờ";
+      case THAN: return "15 - 17 giờ";
+      case DAU: return "17 - 19 giờ";
+      case TUAT: return "19 - 21 giờ";
+      case HOI: return "21 - 23 giờ";
+      default: return "";
+    }
+  }
   // http://azone.vn/ngay-hoang-dao-ngay-hac-dao-gio-hoang-dao-gio-hac-dao-la-gi-d68825
-  static List<String> getHourOfHoangDao(DateTime solarDateTime) {
+  static List<HHDao> getHourOfHoangDao(DateTime solarDateTime) {
     String chiOfDay = getChiOfDay(solarDateTime.day, solarDateTime.month, solarDateTime.year);
-    List<String> result = new List<String>();
+    List<HHDao> result = new List<HHDao>();
     switch (chiOfDay) {
       case DAN:
       case THAN:
-        result.add(TY); result.add(SUU); result.add(THIN); result.add(TI); result.add(MUI); result.add(TUAT);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+        ];
         break;
       case MAO:
       case DAU:
-        result.add(TY); result.add(DAN); result.add(MAO); result.add(NGO); result.add(MUI); result.add(DAU);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+        ];
         break;
       case THIN:
       case TUAT:
-        result.add(DAN); result.add(THIN); result.add(TI); result.add(THAN); result.add(DAU); result.add(HOI);
+        result = [
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       case TI:
       case HOI:
-        result.add(SUU); result.add(THIN); result.add(NGO); result.add(MUI); result.add(TUAT); result.add(HOI);
+        result = [
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       case TY:
       case NGO:
-        result.add(TY); result.add(SUU); result.add(MAO); result.add(NGO); result.add(THAN); result.add(DAU);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+        ];
         break;
       case SUU:
       case MUI:
-        result.add(DAN); result.add(MAO); result.add(TI); result.add(THAN); result.add(TUAT); result.add(HOI);
+        result = [
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       default:
         return [];
@@ -132,43 +193,107 @@ class CalendarUtils {
     return result;
   }
 
-  static List<String> getHourOfHacDao(DateTime solarDateTime) {
+  static List<HHDao> getHourOfHacDao(DateTime solarDateTime) {
     String chiOfDay = getChiOfDay(solarDateTime.day, solarDateTime.month, solarDateTime.year);
-    List<String> result;
+    List<HHDao> result;
     switch (chiOfDay) {
       case DAN:
       case THAN:
-        result = [DAN, MAO, NGO, THAN, DAU, HOI];
-        //result.add(DAN); result.add(MAO); result.add(NGO); result.add(THAN); result.add(DAU); result.add(HOI);
+        result = [
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       case MAO:
       case DAU:
-        result = [SUU, THIN, TI, THAN, TUAT, HOI];
-        //result.add(SUU); result.add(THIN); result.add(TI); result.add(THAN); result.add(TUAT); result.add(HOI);
+        result = [
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       case THIN:
       case TUAT:
-        result = [TY, SUU, MAO, NGO, MUI, TUAT];
-        //result.add(TY); result.add(SUU); result.add(MAO); result.add(NGO); result.add(MUI); result.add(TUAT);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+        ];
         break;
       case TI:
       case HOI:
-        result = [TY, DAN, MAO, TI, THAN, DAU];
-        //result.add(TY); result.add(DAN); result.add(MAO); result.add(TI); result.add(THAN); result.add(DAU);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: MAO, durationHour: getDurationHourByChi(MAO)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: THAN, durationHour: getDurationHourByChi(THAN)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+        ];
         break;
       case TY:
       case NGO:
-        result = [DAN, THIN, TI, MUI, TUAT, HOI];
-        //result.add(DAN); result.add(THIN); result.add(TI); result.add(MUI); result.add(TUAT); result.add(HOI);
+        result = [
+          new HHDao(chi: DAN, durationHour: getDurationHourByChi(DAN)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: TI, durationHour: getDurationHourByChi(TI)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: TUAT, durationHour: getDurationHourByChi(TUAT)),
+          new HHDao(chi: HOI, durationHour: getDurationHourByChi(HOI)),
+        ];
         break;
       case SUU:
       case MUI:
-        result = [TY, SUU, THIN, NGO, MUI, DAU];
-        //result.add(TY); result.add(SUU); result.add(THIN); result.add(NGO); result.add(MUI); result.add(DAU);
+        result = [
+          new HHDao(chi: TY, durationHour: getDurationHourByChi(TY)),
+          new HHDao(chi: SUU, durationHour: getDurationHourByChi(SUU)),
+          new HHDao(chi: THIN, durationHour: getDurationHourByChi(THIN)),
+          new HHDao(chi: NGO, durationHour: getDurationHourByChi(NGO)),
+          new HHDao(chi: MUI, durationHour: getDurationHourByChi(MUI)),
+          new HHDao(chi: DAU, durationHour: getDurationHourByChi(DAU)),
+        ];
         break;
       default:
         return [];
     }
     return result;
+  }
+
+
+  // https://thientue.vn/cach-tinh-gio-xuat-hanh-tot-xau-cua-ly-thuan-phong
+  static String getLongDescriptionGoodBadInDay(int surplus) {
+
+    switch (surplus) {
+      case 0:
+        return "Cầu tài không có lợi hay bị trái ý, ra đi gặp hạn, việc quan phải đòn, gặp ma quỷ cúng lễ mới an.";
+        break;
+      case 1:
+        return "Mọi việc đều tốt, cầu tài đi hướng Tây, Nam. Nhà cửa yên lành, người xuất hành đều bình yên.";
+        break;
+      case 2:
+        return "Vui sắp tới. Cầu tài đi hướng Nam, đi việc quan nhiều may mắn. Người xuất hành đều bình yên. Chăn nuôi đều thuận lợi, người đi có tin vui về.";
+        break;
+      case 3:
+        return "Nghiệp khó thành, cầu tài mờ mịt, kiện cáo nên hoãn lại. Người đi chưa có tin về. Đi hướng Nam tìm nhanh mới thấy, nên phòng ngừa cãi cọ, miệng tiếng rất tầm thường. Việc làm chậm, lâu la nhưng việc gì cũng chắc chắn.";
+        break;
+      case 4:
+        return "Hay cãi cọ, gây chuyện đói kém, phải nên đề phòng, người đi nên hoãn lại, phòng người nguyền rủa, tránh lây bệnh.";
+        break;
+      case 5:
+        return "Rất tốt lành, đi thường gặp may mắn. Buôn bán có lời, phụ nữ báo tin vui mừng, người đi sắp về nhà, mọi việc đều hòa hợp, có bệnh cầu tài sẽ khỏi, người nhà đều mạnh khỏe.";
+        break;
+      default:
+        return "";
+    }
   }
 }
