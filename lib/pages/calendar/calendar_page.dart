@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
+import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
@@ -18,17 +19,20 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
 
   String _timeString;
+  String _workShouldDo;
 
   @override
   void initState() {
     _timeString = "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
     Timer.periodic(Duration(seconds:1), (Timer t)=>_getCurrentTime());
+    //_workShouldDo = CalendarUtils.getLongDescriptionGoodBadInDay();
     super.initState();
   }
 
   void _getCurrentTime()  {
     setState(() {
       _timeString = "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second}";
+
     });
   }
 
@@ -63,6 +67,11 @@ class _CalendarPageState extends State<CalendarPage> {
                 // Illustrations
                 IllustrationDayWidget(),
                 Text(_timeString),
+                Container(
+                  child: Consumer<DateModel>(builder: (context, dateModel, child) {
+                    return Text(CalendarUtils.getLongDescriptionGoodBadInDay(dateModel.getNow()));
+                  })
+                ),
               ],
             ),
           ),
