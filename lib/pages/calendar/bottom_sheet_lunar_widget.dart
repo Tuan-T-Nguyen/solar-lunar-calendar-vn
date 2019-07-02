@@ -66,29 +66,21 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
             child: Consumer<DateModel>(builder: (context, dateModel, child) {
-              return Chip(
-                backgroundColor: Theme.of(context).primaryColor,
-                label: Text(
-                  "Năm ${dateModel.getCanChiYear()}",
-                  style: yearLunarTextStyle,
+              return GestureDetector(
+                onTap: () {
+                  _animationController.isCompleted ? _animationController.reverse() : _animationController.forward();
+                },
+                child: Chip(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  label: Text(
+                    "Năm ${dateModel.getCanChiYear()}",
+                    style: yearLunarTextStyle,
+                  ),
+                  avatar: FloatingActionButton(onPressed: () {},
+                  child: Icon(_animationController.isCompleted ? Icons.arrow_downward : Icons.arrow_upward),),
                 ),
               );
             }),
-          ),
-        ),
-        Positioned(
-          bottom: 10,
-          child: FloatingActionButton(
-            onPressed: () {
-              _animationController.isCompleted
-                  ? _animationController.reverse()
-                  : _animationController.forward();
-            },
-            child: Icon(_animationController.isCompleted
-                ? Icons.arrow_downward
-                : Icons.arrow_upward),
-            mini: true,
-            backgroundColor: primaryColor,
           ),
         ),
       ],
@@ -120,9 +112,6 @@ class BottomSheetContainer extends StatelessWidget {
                   children: <Widget>[
                     LunarInfoWidget(
                       dateTimeSelected: dateModel,
-                    ),
-                    SizedBox(
-                      height: size_20,
                     ),
                     SizedBox(
                       height: size_20,

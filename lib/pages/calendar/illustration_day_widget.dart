@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
+import 'package:pageview/utils/calendar.dart';
+import 'package:provider/provider.dart';
 
 import '../../data-bg.dart';
 
@@ -43,9 +46,15 @@ class IllustrationDayWidget extends StatelessWidget {
                     padding: EdgeInsets.only(right: size_4),
                     height: size_70,
                     alignment: Alignment.center,
-                    child: Text(
-                      "Ngày quốc tế ông già, đàn ông, con trai, bé trai.",
-                      style: illustrationTextStyle,
+                    child: Consumer<DateModel>(
+                      builder: (context, dateModel, child) {
+                        return Container(
+                          child: Text(
+                            CalendarUtils.getNameTrucKienInDay(dateModel.getNow()),
+                            style: illustrationTextStyle,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
