@@ -14,4 +14,5 @@ List<String> assetsSvgBackground = <String>[
   'assets/svg/background/13.svg',
   'assets/svg/background/14.svg',
   'assets/svg/background/15.svg',
+  'assets/svg/background/16.svg',
 ];
