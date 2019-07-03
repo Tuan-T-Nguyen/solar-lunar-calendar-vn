@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 //import 'package:path_provider/path_provider.dart';
 
-import 'truckien.dart';
+import 'package:pageview/sqlite/models/truckien.dart';
 
 class DBHelper {
   static Database _db;

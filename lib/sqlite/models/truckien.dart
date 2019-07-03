@@ -1,8 +1,12 @@
 class TrucKien {
+  static final tblTruckien = "truckien";
+  static final dbId = "id";
+  static final dbName = "name";
+  static final dbWorkTodo = "workTodo";
+  static final dbWorkNotTodo = "workNotTodo";
+
   int id;
-  String name;
-  String workTodo;
-  String workNotTodo;
+  String name, workTodo, workNotTodo;
 
   TrucKien({this.id, this.name, this.workTodo, this.workNotTodo});
 
