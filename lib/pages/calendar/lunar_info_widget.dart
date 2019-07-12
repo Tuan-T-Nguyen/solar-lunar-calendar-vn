@@ -21,15 +21,19 @@ class LunarInfoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Ngày", style: TextStyle(fontSize: 16.0),),
-                    Text("${dateTimeSelected.solarToLunar().lunarDay}",
-                        style: TextStyle(
-                            color: dateTimeSelected.solarToLunar().lunarDay ==
-                                15 ||
-                                dateTimeSelected.solarToLunar().lunarDay == 1
-                                ? Theme.of(context).primaryColor
-                                : Colors.blueAccent,
-                            fontSize: 100.0,
-                            fontWeight: FontWeight.bold)),
+                    AnimatedOpacity(
+                      opacity: 1.0,
+                      duration: Duration(milliseconds: 500),
+                      child: Text("${dateTimeSelected.solarToLunar().lunarDay}",
+                          style: TextStyle(
+                              color: dateTimeSelected.solarToLunar().lunarDay ==
+                                  15 ||
+                                  dateTimeSelected.solarToLunar().lunarDay == 1
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.blueAccent,
+                              fontSize: 100.0,
+                              fontWeight: FontWeight.bold)),
+                    ),
                     Text(dateTimeSelected.getCanChiDay(),
                         style: TextStyle(
                             color: Colors.blueAccent,

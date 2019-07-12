@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pageview/sqlite/repository/truckien_repository.dart';
 
 class DivinePage extends StatefulWidget {
 
@@ -9,7 +8,6 @@ class DivinePage extends StatefulWidget {
 }
 
 class _DivinePageState extends State<DivinePage> {
-  TrucKienRepository _trucKienRepository;
 
   final dummySnapshot = [
     {"name": "Filip", "votes": 15},
@@ -21,7 +19,6 @@ class _DivinePageState extends State<DivinePage> {
 
   @override
   void initState() {
-    _trucKienRepository.populateData();
     super.initState();
   }
 

@@ -39,25 +39,27 @@ class _CalendarPageState extends State<CalendarPage> {
             child: Column(
               children: <Widget>[
                 // Days
-                Container(
-                  margin: EdgeInsets.only(bottom: 8.0),
-                  height: height_days_in_month,
-                  child: Consumer<DateModel>(
-                    builder: (context, dateModel, child) {
-                      return DaysInMonthWidget(
-                        dateTimeSelected: dateModel.getNow(),
-                      );
-                    },
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 8.0),
+                    //height: height_days_in_month,
+                    child: Consumer<DateModel>(
+                      builder: (context, dateModel, child) {
+                        return DaysInMonthWidget(
+                          dateTimeSelected: dateModel.getNow(),
+                        );
+                      },
+                    ),
                   ),
                 ),
 
                 // Illustrations
-                IllustrationDayWidget(),
-                Container(
-                  child: Consumer<DateModel>(builder: (context, dateModel, child) {
-                    return Text(CalendarUtils.getLongDescriptionGoodBadInDay(dateModel.getNow()));
-                  })
+                Flexible(
+                  flex: 2,
+                    child: IllustrationDayWidget()
                 ),
+                //SizedBox(height: size_20,)
               ],
             ),
           ),

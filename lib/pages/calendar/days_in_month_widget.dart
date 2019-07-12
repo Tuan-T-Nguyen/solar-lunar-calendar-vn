@@ -58,7 +58,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
       duration: Duration(milliseconds: 700),
       curve: Curves.ease,
       color: Colors.transparent,
-      width: size_100,
+      width: size_120,
       margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 18.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 18.0),
       child: GestureDetector(
         onTap: () {
