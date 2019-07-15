@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
+import 'package:pageview/utils/ui/show_up.dart';
 
 class LunarInfoWidget extends StatelessWidget {
 
@@ -21,9 +22,7 @@ class LunarInfoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Ngày", style: TextStyle(fontSize: 16.0),),
-                    AnimatedOpacity(
-                      opacity: 1.0,
-                      duration: Duration(milliseconds: 500),
+                    ShowUp(
                       child: Text("${dateTimeSelected.solarToLunar().lunarDay}",
                           style: TextStyle(
                               color: dateTimeSelected.solarToLunar().lunarDay ==
@@ -33,6 +32,7 @@ class LunarInfoWidget extends StatelessWidget {
                                   : Colors.blueAccent,
                               fontSize: 100.0,
                               fontWeight: FontWeight.bold)),
+                      delay: 500,
                     ),
                     Text(dateTimeSelected.getCanChiDay(),
                         style: TextStyle(

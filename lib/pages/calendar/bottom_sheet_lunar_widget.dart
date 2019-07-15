@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
-import 'package:pageview/resources/colors.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
@@ -105,10 +104,8 @@ class BottomSheetContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Flexible(
-                //padding: const EdgeInsets.all(8.0),
                 child: ListView(
                   padding: EdgeInsets.all(8.0),
-                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     LunarInfoWidget(
                       dateTimeSelected: dateModel,

@@ -57,7 +57,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 // Illustrations
                 Flexible(
                   flex: 2,
-                    child: IllustrationDayWidget()
+                  child: IllustrationDayWidget()
                 ),
                 //SizedBox(height: size_20,)
               ],

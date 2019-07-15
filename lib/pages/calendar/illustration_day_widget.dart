@@ -54,6 +54,7 @@ class IllustrationDayWidget extends StatelessWidget {
                         assetsSvgBackground[3],
                         height: maxHeight,
                         fit: BoxFit.cover,
+                        semanticsLabel: "ABC",
                       ),
                     ),
                     Flexible(
@@ -63,44 +64,41 @@ class IllustrationDayWidget extends StatelessWidget {
                         padding: EdgeInsets.all(size_4),
                         height: heightBg,
                         alignment: Alignment.center,
-                        child: BlocProvider<TruckienBloc>(
-                          bloc: _truckienBloc,
-                          child: Consumer<DateModel>(
-                            builder: (context, dateModel, child) {
-                              String truckienName = CalendarUtils.getNameTrucKienInDay(dateModel.getNow());
-                              _truckienBloc.getTrucKien(truckienName);
-                              return BlocProvider(
-                                bloc: _truckienBloc,
-                                child: StreamBuilder<TrucKien>(
-                                    stream: _truckienBloc.truckien,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        return Container(
-                                          child: SingleChildScrollView(
+                        child: Consumer<DateModel>(
+                          builder: (context, dateModel, child) {
+                            String truckienName = CalendarUtils.getNameTrucKienInDay(dateModel.getNow());
+                            _truckienBloc.getTrucKien(truckienName);
+                            return BlocProvider(
+                              bloc: _truckienBloc,
+                              child: StreamBuilder(
+                                stream: _truckienBloc.truckien,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Container(
+                                      child: SingleChildScrollView(
 
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(truckienName, style: illustrationTextStyle,),
-                                                Text(
-                                                  snapshot.hasData ? snapshot.data.workTodo : '',
-                                                  style: TextStyle(color: Colors.green),
-                                                ),
-                                                Text(
-                                                  snapshot.hasData ? snapshot.data.workNotTodo : '',
-                                                  style: TextStyle(color: Colors.purple),
-                                                )
-                                              ],
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(truckienName, style: illustrationTextStyle,),
+                                            Text(
+                                              snapshot.hasData ? snapshot.data.workTodo : '',
+                                              style: TextStyle(color: Colors.green),
                                             ),
-                                          ),
-                                        );
-                                      } else {
-                                        return Skeleton();
-                                      }
-                                    }
-                                ),
-                              );
-                            },
-                          ),
+                                            Text(
+                                              snapshot.hasData ? snapshot.data.workNotTodo : '',
+                                              style: TextStyle(color: Colors.purple),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Text("");
+                                  }
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
