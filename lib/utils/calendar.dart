@@ -304,7 +304,6 @@ class CalendarUtils {
 
   static int getKhacOfTime() {
     int hour = DateTime.now().hour;
-    int minute = DateTime.now().minute;
     if ((hour >= 23 && hour <= 1) || (hour >= 11 && hour <= 13)) {
       return 1;
     }

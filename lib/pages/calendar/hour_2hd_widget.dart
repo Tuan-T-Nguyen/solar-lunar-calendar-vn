@@ -27,9 +27,9 @@ class _Hour2HDWidgetState extends State<Hour2HDWidget> {
 
   @override
   void initState() {
+    super.initState();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-    super.initState();
   }
 
   _scrollListener() {

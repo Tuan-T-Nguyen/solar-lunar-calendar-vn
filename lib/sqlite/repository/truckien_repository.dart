@@ -1,5 +1,4 @@
 import 'package:pageview/sqlite/models/truckien.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../app_db.dart';
 

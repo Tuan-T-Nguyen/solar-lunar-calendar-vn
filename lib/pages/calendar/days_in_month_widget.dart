@@ -24,11 +24,11 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
 
   @override
   initState(){
+    super.initState();
     mDateTimeSelected = widget.dateTimeSelected;
     _scrollController = ScrollController(
       initialScrollOffset: size_100 * mDateTimeSelected.day - size_100,
     );
-    super.initState();
   }
 
   @override
@@ -58,7 +58,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
       duration: Duration(milliseconds: 700),
       curve: Curves.ease,
       color: Colors.transparent,
-      width: size_120,
+      width: size_100,
       margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 18.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 18.0),
       child: GestureDetector(
         onTap: () {

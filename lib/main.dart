@@ -4,12 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pageview/utils/date_picker_vn.dart';
 import 'package:provider/provider.dart';
+import 'bloc/change_date_bloc.dart';
 import 'models/date_info.dart';
 import 'pages/calendar/calendar_page.dart';
 import 'pages/divine/divine_page.dart';
 
 void main() => runApp(
-  ChangeNotifierProvider(builder: (context) => DateModel(), child: MyApp(),)
+  MyApp()
 );
 
 class MyApp extends StatelessWidget {
@@ -19,25 +20,29 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent
     ));
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color(0xFFF84655),
-        scaffoldBackgroundColor: Colors.transparent,
+    // https://developer.school/posts/flutter-provider-and-bloc-in-5-minutes/
+    return ChangeNotifierProvider<ChangeDateBloc>.value(
+      no
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: Color(0xFFF84655),
+          scaffoldBackgroundColor: Colors.transparent,
 
-      ),
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [const Locale('vi'), const Locale('en')],
+        ),
+        home: HomePage(),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [const Locale('vi'), const Locale('en')],
 //      initialRoute: '/',
 //      routes: {
 //        '/': (context) => CalendarPage(),
 //        '/divine': (context) => DivinePage(),
 //      },
+      ),
     );
   }
 }
@@ -95,6 +100,7 @@ class _HomePageState extends State<HomePage>
           child: _buildMonthYear(),
           onTap: () => _selectDate(context),
         ),
+        leading: Text("adas"),
       ),
       //appBar: null,
       body: Container(
@@ -141,24 +147,21 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildMonthYear() {
-    return Consumer<DateModel>(
-      builder: (context, dateModel, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Tháng ${dateModel.getNow().month} - ${dateModel.getNow().year}",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            Icon(
-              Icons.arrow_drop_down,
-              color: Colors.white,
-            )
-          ],
-        );
-      },
+    DateTime now = DateTime.now();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          "Tháng ${now.month} - ${now.year}",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white,
+        )
+      ],
     );
   }
 }

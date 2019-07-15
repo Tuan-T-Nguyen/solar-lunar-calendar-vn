@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
@@ -45,6 +46,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
 
   @override
   Widget build(BuildContext context) {
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
     return Stack(
       children: <Widget>[
         Positioned(
@@ -64,24 +66,40 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
           child: Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
-            child: Consumer<DateModel>(builder: (context, dateModel, child) {
-              return GestureDetector(
-                onTap: () {
-                  _animationController.isCompleted ? _animationController.reverse() : _animationController.forward();
-                },
-                child: Chip(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  label: Text(
-                    "Năm ${dateModel.getCanChiYear()}",
-                    style: yearLunarTextStyle,
-                  ),
-                  avatar: FloatingActionButton(onPressed: () {},
-                  child: Icon(_animationController.isCompleted ? Icons.arrow_downward : Icons.arrow_upward),),
+            child: GestureDetector(
+              onTap: () {
+                _animationController.isCompleted
+                    ? _animationController.reverse()
+                    : _animationController.forward();
+              },
+              child: Chip(
+                backgroundColor: Theme.of(context).primaryColor,
+                label: Text(
+                  "Năm ${changeDateBloc.getCanChiYear()}",
+                  style: yearLunarTextStyle,
                 ),
-              );
-            }),
+                avatar: FloatingActionButton(
+                  onPressed: () {},
+                  child: Icon(_animationController.isCompleted
+                      ? Icons.arrow_downward
+                      : Icons.arrow_upward),
+                ),
+              ),
+            ),
           ),
         ),
+        Positioned(
+            top: animation.value,
+            height: 200,
+            width: 30,
+            child: RaisedButton(
+              onPressed: () {
+                Provider.of<DateModel>(context, listen: false).setNow(DateTime.now());
+              },
+              child: Text("Hôm nay", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
+              color: Theme.of(context).primaryColor,
+            )
+        )
       ],
     );
   }
@@ -97,7 +115,7 @@ class BottomSheetContainer extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
             color: Colors.white,
           ),
           child: Column(

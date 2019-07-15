@@ -1,4 +1,3 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pageview/bloc/bloc_provider.dart';
@@ -6,10 +5,8 @@ import 'package:pageview/bloc/truckien_bloc.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
-import 'package:pageview/sqlite/models/truckien.dart';
 import 'package:pageview/sqlite/repository/truckien_repository.dart';
 import 'package:pageview/utils/calendar.dart';
-import 'package:pageview/utils/ui/skeleton.dart';
 import 'package:provider/provider.dart';
 
 import '../../data-bg.dart';
@@ -26,7 +23,6 @@ class IllustrationDayWidget extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints constraints) {
           double maxHeight = constraints.maxHeight;
           final double heightBg = maxHeight * 0.7;
-          double maxWidth = constraints.maxWidth;
           return Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -54,17 +50,12 @@ class IllustrationDayWidget extends StatelessWidget {
                         assetsSvgBackground[3],
                         height: maxHeight,
                         fit: BoxFit.cover,
-                        semanticsLabel: "ABC",
+                       // semanticsLabel: "ABC",
                       ),
                     ),
                     Flexible(
                       flex: 3,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 42),
-                        padding: EdgeInsets.all(size_4),
-                        height: heightBg,
-                        alignment: Alignment.center,
-                        child: Consumer<DateModel>(
+                      child: Consumer<DateModel>(
                           builder: (context, dateModel, child) {
                             String truckienName = CalendarUtils.getNameTrucKienInDay(dateModel.getNow());
                             _truckienBloc.getTrucKien(truckienName);
@@ -75,15 +66,20 @@ class IllustrationDayWidget extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     return Container(
+                                      margin: EdgeInsets.only(top: maxHeight - heightBg),
+                                      padding: EdgeInsets.symmetric(vertical: size_8, horizontal: size_4),
+                                      alignment: Alignment.topLeft,
                                       child: SingleChildScrollView(
-
                                         child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(truckienName, style: illustrationTextStyle,),
+                                            Container(width: double.infinity, child: Text(truckienName.toUpperCase(), style: illustrationTextStyle,)),
+                                            SizedBox(height: size_4,),
                                             Text(
                                               snapshot.hasData ? snapshot.data.workTodo : '',
                                               style: TextStyle(color: Colors.green),
                                             ),
+                                            SizedBox(height: size_4,),
                                             Text(
                                               snapshot.hasData ? snapshot.data.workNotTodo : '',
                                               style: TextStyle(color: Colors.purple),
@@ -100,7 +96,6 @@ class IllustrationDayWidget extends StatelessWidget {
                             );
                           },
                         ),
-                      ),
                     ),
 
                   ],

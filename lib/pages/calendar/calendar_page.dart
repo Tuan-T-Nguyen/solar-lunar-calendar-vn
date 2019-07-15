@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
-import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +14,6 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-
   @override
   void initState() {
     super.initState();
@@ -39,26 +35,18 @@ class _CalendarPageState extends State<CalendarPage> {
             child: Column(
               children: <Widget>[
                 // Days
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 8.0),
-                    //height: height_days_in_month,
-                    child: Consumer<DateModel>(
-                      builder: (context, dateModel, child) {
-                        return DaysInMonthWidget(
-                          dateTimeSelected: dateModel.getNow(),
-                        );
-                      },
-                    ),
+                Container(
+                  height: height_days_in_month,
+                  child: Consumer<DateModel>(
+                    builder: (context, dateModel, child) {
+                      return DaysInMonthWidget(
+                        dateTimeSelected: dateModel.getNow(),
+                      );
+                    },
                   ),
                 ),
-
                 // Illustrations
-                Flexible(
-                  flex: 2,
-                  child: IllustrationDayWidget()
-                ),
+                Flexible(flex: 2, child: IllustrationDayWidget()),
                 //SizedBox(height: size_20,)
               ],
             ),
@@ -75,4 +63,3 @@ class _CalendarPageState extends State<CalendarPage> {
     return getWidget();
   }
 }
-
