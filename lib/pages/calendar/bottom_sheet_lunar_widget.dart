@@ -90,20 +90,6 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
             ),
           ),
         ),
-        Positioned(
-            top: animation.value,
-            height: 200,
-            width: 30,
-            child: RaisedButton(
-              onPressed: () {
-                if (changeDateBloc.dateTime.day != DateTime.now().day) {
-                  changeDateBloc.dateTime = DateTime.now();
-                }
-              },
-              child: Text("Hôm nay", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
-              color: Theme.of(context).primaryColor,
-            )
-        )
       ],
     );
   }

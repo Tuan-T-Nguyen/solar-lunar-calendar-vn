@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/utils/size_config.dart';
-import 'package:provider/provider.dart';
 
 import 'bottom_sheet_lunar_widget.dart';
 import 'days_in_month_widget.dart';

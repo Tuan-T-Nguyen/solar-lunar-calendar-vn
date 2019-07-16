@@ -56,7 +56,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
       child: GestureDetector(
         onTap: () {
           if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
-            changeDateBloc.dateTime = dateItem.solarDateTime;
+            changeDateBloc.setNewDateTime(dateItem.solarDateTime);
           }
         },
         child: Card(
@@ -95,7 +95,9 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
   @override
   Widget build(BuildContext context) {
     final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
-    _scrollController.animateTo(size_100 * changeDateBloc.dateTime.day - size_100, duration: Duration(milliseconds: 800), curve: Curves.linear);
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(size_100 * changeDateBloc.dateTime.day - size_100, duration: Duration(milliseconds: 800), curve: Curves.linear);
+    }
     return _createListView(changeDateBloc);
   }
 

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pageview/utils/date_picker_vn.dart';
+import 'package:pageview/appbar/calendar-appbar.dart';
 import 'package:provider/provider.dart';
 
+import 'appbar/divine-appbar.dart';
 import 'bloc/change_date_bloc.dart';
 import 'pages/calendar/calendar_page.dart';
 import 'pages/divine/divine_page.dart';
@@ -62,21 +63,6 @@ class _HomePageState extends State<HomePage>
 
   TabController _tabController;
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePickerCustom(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-      locale: const Locale('vi', 'VN'),
-
-    );
-
-    if (picked != null && picked != new DateTime.now()){
-      //Provider.of<DateModel>(context, listen: false).setNow(picked);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -92,16 +78,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    var appBar = _currentTabIndex == 0 ? CalendarAppbar() : DivineAppbar();
     return Scaffold(
-      appBar: AppBar(
-        //backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: GestureDetector(
-          child: _buildMonthYear(),
-          onTap: () => _selectDate(context),
-        ),
-        leading: Text("adas"),
-      ),
+      appBar: appBar,
       //appBar: null,
       body: Container(
         decoration: BoxDecoration(
@@ -131,7 +110,7 @@ class _HomePageState extends State<HomePage>
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today), title: Text("Lịch")),
+                icon: Icon(Icons.home), title: Text("Lịch")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today), title: Text("Bói")),
             BottomNavigationBarItem(
@@ -144,24 +123,5 @@ class _HomePageState extends State<HomePage>
     setState(() {
       _currentTabIndex = _tabController.index;
     });
-  }
-
-  Widget _buildMonthYear() {
-    DateTime now = DateTime.now();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "Tháng ${now.month} - ${now.year}",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        Icon(
-          Icons.arrow_drop_down,
-          color: Colors.white,
-        )
-      ],
-    );
   }
 }

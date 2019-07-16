@@ -9,4 +9,8 @@ class ChangeDateBloc extends ChangeNotifier {
     _dateTime = inputDateTime;
     notifyListeners();
   }
+
+  setNewDateTime(DateTime inputDateTime) {
+    dateTime = inputDateTime;
+  }
 }
