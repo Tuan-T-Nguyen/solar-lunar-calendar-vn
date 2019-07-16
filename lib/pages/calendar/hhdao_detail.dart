@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
+import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/models/hh_dao.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
+import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class HHDaoDetail extends StatefulWidget {
   final HHDao hhDao;
@@ -16,9 +20,12 @@ class HHDaoDetail extends StatefulWidget {
 class _HHDaoDetailState extends State<HHDaoDetail> {
   @override
   Widget build(BuildContext context) {
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    Lunar lunar = CalendarUtils.solarToLunarByDateTime(changeDateBloc.dateTime);
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          title: Text('Giờ ${widget.hhDao.chi}\t ${widget.hhDao.durationHour}', style: descriptionHDBoldStyle,),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -40,11 +47,24 @@ class _HHDaoDetailState extends State<HHDaoDetail> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: size_16),
                     child: Row(
+                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text('Giờ ${widget.hhDao.chi}', style: descriptionHDBoldStyle,),
-                        SizedBox(width: size_12,),
-                        Text(widget.hhDao.durationHour, style: descriptionHDBoldStyle,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("${changeDateBloc.dateTime.day} / ${changeDateBloc.dateTime.month}", style: valueTextStyle),
+                            Text("Dương lịch", style: labelTextStyle,),
+                          ],
+                        ),
+                        SizedBox(width: size_40,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("${lunar.lunarDay} / ${lunar.lunarMonth}", style: valueTextStyle),
+                            Text("Âm lịch", style: labelTextStyle,),
+                          ],
+                        ),
                       ],
                     ),
                   ),

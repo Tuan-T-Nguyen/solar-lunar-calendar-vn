@@ -69,3 +69,15 @@ const TextStyle descriptionHDBoldStyle = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.white,
 );
+
+final TextStyle labelTextStyle = TextStyle(
+  fontWeight: FontWeight.normal,
+  fontSize: 16.0,
+  color: Colors.white70,
+);
+
+final TextStyle valueTextStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 18.0,
+  color: Colors.white,
+);
