@@ -60,7 +60,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
                   ? _animationController.forward()
                   : _animationController.reverse();
             },
-            child: BottomSheetContainer(),
+            child: _buildLunarInfo(),
           ),
         ),
         Positioned(
@@ -93,11 +93,8 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
       ],
     );
   }
-}
 
-class BottomSheetContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildLunarInfo() {
     final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
     return Container(
       padding: EdgeInsets.only(top: 25),
@@ -154,7 +151,7 @@ class BottomSheetContainer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: _animationController.isCompleted ? 300 : 500,
                 ),
                 // LunarInfo(),
               ],

@@ -53,26 +53,29 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
       color: Colors.transparent,
       width: size_100,
       margin: isSelected ? EdgeInsets.only(left: 3.0, right: 3.0, top: 0, bottom: 18.0) : EdgeInsets.only(left: 3.0, right: 3.0, top: 18.0),
-      child: GestureDetector(
-        onTap: () {
-          if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
-            changeDateBloc.setNewDateTime(dateItem.solarDateTime);
-          }
-        },
-        child: Card(
-          elevation: isSelected ? 12 : 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadiusCommon),
-          ),
-          color: Colors.white,
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text("$solarDay", style: (weekDay == 6 || weekDay == 7) ? weekdayStyle : dayStyle),
-                Text(CalendarUtils.getDayStringBy(weekDay), style: (weekDay == 6 || weekDay == 7) ? weekdayTStyle : dayTStyle),
-              ],
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
+              changeDateBloc.setNewDateTime(dateItem.solarDateTime);
+            }
+          },
+          child: Card(
+            elevation: isSelected ? 12 : 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadiusCommon),
+            ),
+            color: Colors.white,
+            child: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text("$solarDay", style: (weekDay == 6 || weekDay == 7) ? weekdayStyle : dayStyle),
+                  Text(CalendarUtils.getDayStringBy(weekDay), style: (weekDay == 6 || weekDay == 7) ? weekdayTStyle : dayTStyle),
+                ],
+              ),
             ),
           ),
         ),

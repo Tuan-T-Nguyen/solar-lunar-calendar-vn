@@ -3,14 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pageview/bloc/bloc_provider.dart';
 import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/bloc/truckien_bloc.dart';
-import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/sqlite/repository/truckien_repository.dart';
 import 'package:pageview/utils/calendar.dart';
 import 'package:provider/provider.dart';
-
-import '../../data-bg.dart';
 
 class IllustrationDayWidget extends StatelessWidget {
   @override
@@ -52,7 +49,7 @@ class IllustrationDayWidget extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: SvgPicture.asset(
-                        assetsSvgBackground[3],
+                        'assets/svg/background/4.svg',
                         height: maxHeight,
                         fit: BoxFit.cover,
                        // semanticsLabel: "ABC",

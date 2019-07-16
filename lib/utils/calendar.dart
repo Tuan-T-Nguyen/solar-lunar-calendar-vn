@@ -147,6 +147,37 @@ class CalendarUtils {
     }
   }
 
+  static String getIconZodiacImage(String chi, bool isLargeSize) {
+    switch (chi) {
+      case TY:
+        return isLargeSize ? "assets/12Zodiac/ty.jpeg" : "assets/12Zodiac/mouse.jpeg";
+      case SUU:
+        return isLargeSize ? "assets/12Zodiac/suu.jpeg" : "assets/12Zodiac/buffalo.jpeg";
+      case DAN:
+        return isLargeSize ? "assets/12Zodiac/dan.jpeg" : "assets/12Zodiac/tiger.jpeg";
+      case MAO:
+        return isLargeSize ? "assets/12Zodiac/mao.jpeg" : "assets/12Zodiac/cat.jpeg";
+      case THIN:
+        return isLargeSize ? "assets/12Zodiac/thin.jpeg" : "assets/12Zodiac/dragon.jpeg";
+      case TI:
+        return isLargeSize ? "assets/12Zodiac/ti.jpeg" : "assets/12Zodiac/snake.jpeg";
+      case NGO:
+        return isLargeSize ? "assets/12Zodiac/ngo.jpeg" : "assets/12Zodiac/horse.jpeg";
+      case MUI:
+        return isLargeSize ? "assets/12Zodiac/mui.jpeg" : "assets/12Zodiac/goat.jpeg";
+      case THAN:
+        return isLargeSize ? "assets/12Zodiac/than.jpeg" : "assets/12Zodiac/monkey.jpeg";
+      case DAU:
+        return isLargeSize ? "assets/12Zodiac/dau.jpeg" : "assets/12Zodiac/chicken.jpeg";
+      case TUAT:
+        return isLargeSize ? "assets/12Zodiac/tuat.jpeg" : "assets/12Zodiac/dog.jpeg";
+      case HOI:
+        return isLargeSize ? "assets/12Zodiac/hoi.jpeg" : "assets/12Zodiac/pig.jpeg";
+      default:
+        return "";
+    }
+  }
+
   // http://azone.vn/ngay-hoang-dao-ngay-hac-dao-gio-hoang-dao-gio-hac-dao-la-gi-d68825
   static List<HHDao> getHourOfHoangDao(DateTime solarDateTime) {
     String chiOfDay =

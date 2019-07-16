@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pageview/appbar/calendar-appbar.dart';
+import 'package:pageview/resources/colors.dart';
+import 'package:pageview/ui/appbar/calendar-appbar.dart';
+import 'package:pageview/ui/appbar/divine-appbar.dart';
 import 'package:provider/provider.dart';
 
-import 'appbar/divine-appbar.dart';
 import 'bloc/change_date_bloc.dart';
 import 'pages/calendar/calendar_page.dart';
 import 'pages/divine/divine_page.dart';
@@ -94,11 +95,13 @@ class _HomePageState extends State<HomePage>
                 ]
             )
         ),
+      //color: Colors.white,
         child: TabBarView(
           controller: _tabController,
           children: _tabList,
         ),
       ),
+      //bottomNavigationBar: BottomNavyBar(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
           currentIndex: _currentTabIndex,
@@ -114,7 +117,7 @@ class _HomePageState extends State<HomePage>
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today), title: Text("Bói")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today), title: Text("Chuyển đổi")),
+                icon: Icon(Icons.widgets), title: Text("Tiện ích")),
           ]),
     );
   }
