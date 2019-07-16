@@ -7,13 +7,6 @@ import 'package:pageview/utils/calendar.dart';
 import 'package:provider/provider.dart';
 
 class DaysInMonthWidget extends StatefulWidget {
-
-  static BuildContext context;
-
-  final DateTime dateTimeSelected;
-
-  DaysInMonthWidget({Key key, this.dateTimeSelected}) :  super(key: key);
-
   @override
   _DaysInMonthWidgetState createState() => _DaysInMonthWidgetState();
 }
@@ -21,20 +14,18 @@ class DaysInMonthWidget extends StatefulWidget {
 class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
 
   ScrollController _scrollController;
-  DateTime mDateTimeSelected;
 
   @override
   initState(){
     super.initState();
-    mDateTimeSelected = widget.dateTimeSelected;
     _scrollController = ScrollController(
-      initialScrollOffset: size_100 * mDateTimeSelected.day - size_100,
+      initialScrollOffset: size_100 * DateTime.now().day - size_100,
     );
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController?.dispose();
     super.dispose();
   }
 
@@ -53,6 +44,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
 
     int solarDay = dateItem.solarDateTime.day;
     int weekDay = dateItem.solarDateTime.weekday;
+    DateTime mDateTimeSelected = changeDateBloc.dateTime;
     bool isSelected = solarDay == mDateTimeSelected.day;
 
     return AnimatedContainer(
@@ -65,9 +57,6 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
         onTap: () {
           if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
             changeDateBloc.dateTime = dateItem.solarDateTime;
-            setState(() {
-              mDateTimeSelected = dateItem.solarDateTime;
-            });
           }
         },
         child: Card(
@@ -92,7 +81,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
   }
 
   Widget _createListView(ChangeDateBloc changeDateBloc) {
-    List<DateItem> items = _getDaysInMonth(mDateTimeSelected);
+    List<DateItem> items = _getDaysInMonth(changeDateBloc.dateTime);
     return new ListView.builder(
       controller: _scrollController,
       scrollDirection: Axis.horizontal,
@@ -106,6 +95,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
   @override
   Widget build(BuildContext context) {
     final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    _scrollController.animateTo(size_100 * changeDateBloc.dateTime.day - size_100, duration: Duration(milliseconds: 800), curve: Curves.linear);
     return _createListView(changeDateBloc);
   }
 

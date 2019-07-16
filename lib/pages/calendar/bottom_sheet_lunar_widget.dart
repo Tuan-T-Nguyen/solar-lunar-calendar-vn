@@ -96,7 +96,9 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
             width: 30,
             child: RaisedButton(
               onPressed: () {
-                //Provider.of<DateModel>(context, listen: false).setNow(DateTime.now());
+                if (changeDateBloc.dateTime.day != DateTime.now().day) {
+                  changeDateBloc.dateTime = DateTime.now();
+                }
               },
               child: Text("Hôm nay", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
               color: Theme.of(context).primaryColor,

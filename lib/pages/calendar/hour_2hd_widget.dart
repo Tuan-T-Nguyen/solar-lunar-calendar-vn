@@ -32,6 +32,13 @@ class _Hour2HDWidgetState extends State<Hour2HDWidget> {
     _controller.addListener(_scrollListener);
   }
 
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {

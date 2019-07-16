@@ -25,7 +25,6 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   Widget getWidget() {
-    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -38,9 +37,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 // Days
                 Container(
                   height: height_days_in_month,
-                  child: DaysInMonthWidget(
-                    dateTimeSelected: changeDateBloc.dateTime,
-                  ),
+                  child: DaysInMonthWidget(),
                 ),
                 // Illustrations
                 Flexible(flex: 2, child: IllustrationDayWidget()),
