@@ -521,4 +521,12 @@ class CalendarUtils {
     int truckien = listTrucKien[solarDateTime.day - 1];
     return "Trực " + TRUC12[truckien];
   }
+
+  static Lunar solarToLunarByDateTime(DateTime dateTime) {
+    Solar solar = Solar(
+        solarYear: dateTime.year,
+        solarMonth: dateTime.month,
+        solarDay: dateTime.day);
+    return LunarSolarConverter.solarToLunar(solar);
+  }
 }

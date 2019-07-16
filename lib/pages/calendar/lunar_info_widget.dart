@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pageview/models/date_info.dart';
+import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
+import 'package:pageview/utils/calendar.dart';
 import 'package:pageview/utils/ui/show_up.dart';
 
 class LunarInfoWidget extends StatelessWidget {
 
-  final DateModel dateTimeSelected;
+  final DateTime dateTimeSelected;
 
   LunarInfoWidget({this.dateTimeSelected});
 
   @override
   Widget build(BuildContext context) {
+    Lunar lunar = CalendarUtils.solarToLunarByDateTime(dateTimeSelected);
+    String canChiDay = CalendarUtils.getCanChiOfDay(dateTimeSelected.day, dateTimeSelected.month, dateTimeSelected.year);
+    String canChiMonth = CalendarUtils.getCanChiOfMonth(lunar.lunarYear, lunar.lunarMonth);
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -23,18 +27,18 @@ class LunarInfoWidget extends StatelessWidget {
                   children: <Widget>[
                     Text("Ngày", style: TextStyle(fontSize: 16.0),),
                     ShowUp(
-                      child: Text("${dateTimeSelected.solarToLunar().lunarDay}",
+                      child: Text("${lunar.lunarDay}",
                           style: TextStyle(
-                              color: dateTimeSelected.solarToLunar().lunarDay ==
+                              color: lunar.lunarDay ==
                                   15 ||
-                                  dateTimeSelected.solarToLunar().lunarDay == 1
+                                  lunar.lunarDay == 1
                                   ? Theme.of(context).primaryColor
                                   : Colors.blueAccent,
                               fontSize: 100.0,
                               fontWeight: FontWeight.bold)),
                       delay: 500,
                     ),
-                    Text(dateTimeSelected.getCanChiDay(),
+                    Text(canChiDay,
                         style: TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 22.0,
@@ -45,12 +49,12 @@ class LunarInfoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text("Tháng", style: TextStyle(fontSize: 16.0),),
-                    Text("${dateTimeSelected.solarToLunar().lunarMonth}",
+                    Text("${lunar.lunarMonth}",
                         style: TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 100.0,
                             fontWeight: FontWeight.bold)),
-                    Text(dateTimeSelected.getCanChiMonth(),
+                    Text(canChiMonth,
                         style: TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 22.0,
@@ -60,18 +64,6 @@ class LunarInfoWidget extends StatelessWidget {
               ],
             ),
           ),
-          // Hours of Hoang Dao
-//              ListView(
-//                children: <Widget>[
-//                  ListTile(
-//                    title: Text("${CalendarUtils.getHourOfHoangDao(_now)[0]}"),
-//                  )
-//                ],
-//              ),
-//              Container(
-//                // color: Colors.blueAccent,
-//                height: 150,
-//              ),
         ],
       ),
     );

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     ));
     // https://developer.school/posts/flutter-provider-and-bloc-in-5-minutes/
     return ChangeNotifierProvider<ChangeDateBloc>.value(
-      no
+      value: ChangeDateBloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage>
     );
 
     if (picked != null && picked != new DateTime.now()){
-      Provider.of<DateModel>(context, listen: false).setNow(picked);
+      //Provider.of<DateModel>(context, listen: false).setNow(picked);
     }
   }
 

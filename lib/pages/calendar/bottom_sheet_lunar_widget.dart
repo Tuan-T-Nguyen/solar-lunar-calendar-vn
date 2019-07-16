@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:pageview/bloc/change_date_bloc.dart';
-import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
@@ -47,6 +47,8 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
   @override
   Widget build(BuildContext context) {
     final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    Lunar lunar = CalendarUtils.solarToLunarByDateTime(changeDateBloc.dateTime);
+    String canchiYear = CalendarUtils.getCanChiOfYear(lunar.lunarYear);
     return Stack(
       children: <Widget>[
         Positioned(
@@ -75,7 +77,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
               child: Chip(
                 backgroundColor: Theme.of(context).primaryColor,
                 label: Text(
-                  "Năm ${changeDateBloc.getCanChiYear()}",
+                  "Năm $canchiYear",
                   style: yearLunarTextStyle,
                 ),
                 avatar: FloatingActionButton(
@@ -94,7 +96,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
             width: 30,
             child: RaisedButton(
               onPressed: () {
-                Provider.of<DateModel>(context, listen: false).setNow(DateTime.now());
+                //Provider.of<DateModel>(context, listen: false).setNow(DateTime.now());
               },
               child: Text("Hôm nay", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
               color: Theme.of(context).primaryColor,
@@ -108,73 +110,70 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
 class BottomSheetContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DateModel>(
-      builder: (context, dateModel, child) {
-        return Container(
-          padding: EdgeInsets.only(top: 25),
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-            color: Colors.white,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: ListView(
-                  padding: EdgeInsets.all(8.0),
-                  children: <Widget>[
-                    LunarInfoWidget(
-                      dateTimeSelected: dateModel,
-                    ),
-                    SizedBox(
-                      height: size_20,
-                    ),
-                    Text(
-                      "Giờ Hoàng Đạo".toUpperCase(),
-                      style: hourHoangDaoStyle,
-                    ),
-                    SizedBox(
-                      height: size_8,
-                    ),
-                    Container(
-                      height: size_100,
-                      child: Hour2HDWidget(
-                        hhDao:
-                            CalendarUtils.getHourOfHoangDao(dateModel.getNow()),
-                        bgColor: Colors.green,
-                      ),
-                    ),
-                    SizedBox(
-                      height: size_20,
-                    ),
-                    Text(
-                      "Giờ Hắc Đạo".toUpperCase(),
-                      style: hourHacDaoStyle,
-                    ),
-                    SizedBox(
-                      height: size_8,
-                    ),
-                    Container(
-                      height: size_100,
-                      child: Hour2HDWidget(
-                        hhDao:
-                            CalendarUtils.getHourOfHacDao(dateModel.getNow()),
-                        bgColor: Colors.purple,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 300,
-                    ),
-                    // LunarInfo(),
-                  ],
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    return Container(
+      padding: EdgeInsets.only(top: 25),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+        color: Colors.white,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            child: ListView(
+              padding: EdgeInsets.all(8.0),
+              children: <Widget>[
+                LunarInfoWidget(
+                  dateTimeSelected: changeDateBloc.dateTime,
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: size_20,
+                ),
+                Text(
+                  "Giờ Hoàng Đạo".toUpperCase(),
+                  style: hourHoangDaoStyle,
+                ),
+                SizedBox(
+                  height: size_8,
+                ),
+                Container(
+                  height: size_100,
+                  child: Hour2HDWidget(
+                    hhDao:
+                    CalendarUtils.getHourOfHoangDao(changeDateBloc.dateTime),
+                    bgColor: Colors.green,
+                  ),
+                ),
+                SizedBox(
+                  height: size_20,
+                ),
+                Text(
+                  "Giờ Hắc Đạo".toUpperCase(),
+                  style: hourHacDaoStyle,
+                ),
+                SizedBox(
+                  height: size_8,
+                ),
+                Container(
+                  height: size_100,
+                  child: Hour2HDWidget(
+                    hhDao:
+                    CalendarUtils.getHourOfHacDao(changeDateBloc.dateTime),
+                    bgColor: Colors.purple,
+                  ),
+                ),
+                SizedBox(
+                  height: 300,
+                ),
+                // LunarInfo(),
+              ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

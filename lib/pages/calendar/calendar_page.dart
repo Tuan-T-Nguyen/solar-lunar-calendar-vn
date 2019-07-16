@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pageview/models/date_info.dart';
+import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/utils/size_config.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +25,7 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   Widget getWidget() {
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -37,12 +38,8 @@ class _CalendarPageState extends State<CalendarPage> {
                 // Days
                 Container(
                   height: height_days_in_month,
-                  child: Consumer<DateModel>(
-                    builder: (context, dateModel, child) {
-                      return DaysInMonthWidget(
-                        dateTimeSelected: dateModel.getNow(),
-                      );
-                    },
+                  child: DaysInMonthWidget(
+                    dateTimeSelected: changeDateBloc.dateTime,
                   ),
                 ),
                 // Illustrations

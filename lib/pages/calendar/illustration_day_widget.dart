@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pageview/bloc/bloc_provider.dart';
+import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/bloc/truckien_bloc.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
@@ -15,6 +16,10 @@ class IllustrationDayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TruckienBloc _truckienBloc = TruckienBloc(TrucKienRepository.get());
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    String truckienName = CalendarUtils.getNameTrucKienInDay(changeDateBloc.dateTime);
+    _truckienBloc.getTrucKien(truckienName);
+
     return Container(
       //height: size_120,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -55,47 +60,41 @@ class IllustrationDayWidget extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 3,
-                      child: Consumer<DateModel>(
-                          builder: (context, dateModel, child) {
-                            String truckienName = CalendarUtils.getNameTrucKienInDay(dateModel.getNow());
-                            _truckienBloc.getTrucKien(truckienName);
-                            return BlocProvider(
-                              bloc: _truckienBloc,
-                              child: StreamBuilder(
-                                stream: _truckienBloc.truckien,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Container(
-                                      margin: EdgeInsets.only(top: maxHeight - heightBg),
-                                      padding: EdgeInsets.symmetric(vertical: size_8, horizontal: size_4),
-                                      alignment: Alignment.topLeft,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(width: double.infinity, child: Text(truckienName.toUpperCase(), style: illustrationTextStyle,)),
-                                            SizedBox(height: size_4,),
-                                            Text(
-                                              snapshot.hasData ? snapshot.data.workTodo : '',
-                                              style: TextStyle(color: Colors.green),
-                                            ),
-                                            SizedBox(height: size_4,),
-                                            Text(
-                                              snapshot.hasData ? snapshot.data.workNotTodo : '',
-                                              style: TextStyle(color: Colors.purple),
-                                            )
-                                          ],
-                                        ),
+                      child: BlocProvider(
+                        bloc: _truckienBloc,
+                        child: StreamBuilder(
+                          stream: _truckienBloc.truckien,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Container(
+                                margin: EdgeInsets.only(top: maxHeight - heightBg),
+                                padding: EdgeInsets.symmetric(vertical: size_8, horizontal: size_4),
+                                alignment: Alignment.topLeft,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(width: double.infinity, child: Text(truckienName.toUpperCase(), style: illustrationTextStyle,)),
+                                      SizedBox(height: size_4,),
+                                      Text(
+                                        snapshot.hasData ? snapshot.data.workTodo : '',
+                                        style: TextStyle(color: Colors.green),
                                       ),
-                                    );
-                                  } else {
-                                    return Text("");
-                                  }
-                                },
-                              ),
-                            );
+                                      SizedBox(height: size_4,),
+                                      Text(
+                                        snapshot.hasData ? snapshot.data.workNotTodo : '',
+                                        style: TextStyle(color: Colors.purple),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Text("");
+                            }
                           },
                         ),
+                      ),
                     ),
 
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/models/date_info.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
@@ -48,7 +49,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
     return daysInMonth;
   }
 
-  Widget _buildRow(DateItem dateItem) {
+  Widget _buildRow(ChangeDateBloc changeDateBloc, DateItem dateItem) {
 
     int solarDay = dateItem.solarDateTime.day;
     int weekDay = dateItem.solarDateTime.weekday;
@@ -63,7 +64,7 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
       child: GestureDetector(
         onTap: () {
           if (mDateTimeSelected == null || mDateTimeSelected.day != dateItem.solarDateTime.day) {
-            Provider.of<DateModel>(context, listen: false).setNow(dateItem.solarDateTime);
+            changeDateBloc.dateTime = dateItem.solarDateTime;
             setState(() {
               mDateTimeSelected = dateItem.solarDateTime;
             });
@@ -74,7 +75,6 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadiusCommon),
           ),
-          //color: isSelected ? primaryColor : Colors.white,
           color: Colors.white,
           child: Container(
             padding: EdgeInsets.all(8.0),
@@ -91,21 +91,22 @@ class _DaysInMonthWidgetState extends State<DaysInMonthWidget> {
     );
   }
 
-  Widget _createListView() {
+  Widget _createListView(ChangeDateBloc changeDateBloc) {
     List<DateItem> items = _getDaysInMonth(mDateTimeSelected);
     return new ListView.builder(
       controller: _scrollController,
       scrollDirection: Axis.horizontal,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int position) {
-        return _buildRow(items[position]);
+        return _buildRow(changeDateBloc, items[position]);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return _createListView();
+    final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    return _createListView(changeDateBloc);
   }
 
 }
