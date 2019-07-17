@@ -10,4 +10,12 @@ class HHDao {
   String getZodiacImage(bool isLargeSize) {
     return CalendarUtils.getIconZodiacImage(this.chi, isLargeSize);
   }
+
+  int getStartTime() {
+    return CalendarUtils.getTimeByChi(chi, true);
+  }
+
+  int getEndTime() {
+    return CalendarUtils.getTimeByChi(chi, false);
+  }
 }

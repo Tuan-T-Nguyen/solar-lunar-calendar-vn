@@ -203,7 +203,7 @@ class _Hour2HDWidgetState extends State<Hour2HDWidget> {
                   );
                 });
           },
-          transitionDuration: Duration(milliseconds: 400)),
+          transitionDuration: Duration(milliseconds: 500)),
     );
   }
 }

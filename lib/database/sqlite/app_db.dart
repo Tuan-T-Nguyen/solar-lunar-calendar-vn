@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:pageview/sqlite/models/truckien.dart';
+import 'package:pageview/database/sqlite/models/truckien.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';

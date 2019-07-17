@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:pageview/bloc/change_date_bloc.dart';
+import 'package:pageview/database/json/models/xuathanh.dart';
+import 'package:pageview/database/json/repository/xuathanh_repository.dart';
 import 'package:pageview/models/hh_dao.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
@@ -21,6 +23,8 @@ class _HHDaoDetailState extends State<HHDaoDetail> {
   @override
   Widget build(BuildContext context) {
     final ChangeDateBloc changeDateBloc = Provider.of<ChangeDateBloc>(context);
+    debugPrint("--------Hour HD: ${widget.hhDao.getStartTime()}");
+    DateTime dateTimeXuatHanh = DateTime(changeDateBloc.dateTime.year, changeDateBloc.dateTime.month, changeDateBloc.dateTime.day, widget.hhDao.getStartTime());
     Lunar lunar = CalendarUtils.solarToLunarByDateTime(changeDateBloc.dateTime);
     return Scaffold(
         appBar: AppBar(
@@ -94,8 +98,18 @@ class _HHDaoDetailState extends State<HHDaoDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: size_12,),
-                          Text("ABC"),
-                          Text("ABC"),
+                          Text("Giờ Xuất Hành theo Lý Thuần Phong"),
+                          FutureBuilder<XuatHanh>(
+                            future: XuathanhRepository.getXuatHanh(dateTimeXuatHanh),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('${snapshot.data.name}\n${snapshot.data.description}');
+                              } else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+                              return CircularProgressIndicator();
+                            },
+                          ),
                         ],
                       ),
                     ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:pageview/sqlite/models/truckien.dart';
-import 'package:pageview/sqlite/repository/truckien_repository.dart';
+import 'package:pageview/database/sqlite/models/truckien.dart';
+import 'package:pageview/database/sqlite/repository/truckien_repository.dart';
 
 import 'bloc_provider.dart';
 

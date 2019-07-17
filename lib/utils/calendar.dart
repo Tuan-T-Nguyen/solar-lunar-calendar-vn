@@ -147,6 +147,25 @@ class CalendarUtils {
     }
   }
 
+  static int getTimeByChi(String chi, bool isStartTime) {
+    switch (chi) {
+      case TY: return isStartTime ? 23 : 1;
+      case SUU: return isStartTime ? 1 : 3;
+      case DAN: return isStartTime ? 3 : 5;
+      case MAO: return isStartTime ? 5 : 7;
+      case THIN: return isStartTime ? 7 : 9;
+      case TI: return isStartTime ? 9 : 11;
+      case NGO: return isStartTime ? 11 : 13;
+      case MUI: return isStartTime ? 13 : 15;
+      case THAN: return isStartTime ? 15 : 17;
+      case DAU: return isStartTime ? 17 : 19;
+      case TUAT: return isStartTime ? 19 : 21;
+      case HOI: return isStartTime ? 21 : 23;
+      default:
+        return 0;
+    }
+  }
+
   static String getIconZodiacImage(String chi, bool isLargeSize) {
     switch (chi) {
       case TY:
@@ -333,24 +352,24 @@ class CalendarUtils {
     return result;
   }
 
-  static int getKhacOfTime() {
-    int hour = DateTime.now().hour;
-    if ((hour >= 23 && hour <= 1) || (hour >= 11 && hour <= 13)) {
+  static int getKhacOfTime(DateTime dateTime) {
+    int hour = dateTime.hour;
+    if ((hour >= 23 && hour < 1) || (hour >= 11 && hour < 13)) {
       return 1;
     }
-    if ((hour >= 1 && hour <= 3) || (hour >= 13 && hour <= 15)) {
+    if ((hour >= 1 && hour < 3) || (hour >= 13 && hour < 15)) {
       return 2;
     }
-    if ((hour >= 3 && hour <= 5) || (hour >= 15 && hour <= 17)) {
+    if ((hour >= 3 && hour < 5) || (hour >= 15 && hour < 17)) {
       return 3;
     }
-    if ((hour >= 5 && hour <= 7) || (hour >= 17 && hour <= 19)) {
+    if ((hour >= 5 && hour < 7) || (hour >= 17 && hour < 19)) {
       return 4;
     }
-    if ((hour >= 7 && hour <= 9) || (hour >= 19 && hour <= 21)) {
+    if ((hour >= 7 && hour < 9) || (hour >= 19 && hour < 21)) {
       return 5;
     }
-    if ((hour >= 9 && hour <= 11) || (hour >= 21 && hour <= 23)) {
+    if ((hour >= 9 && hour < 11) || (hour >= 21 && hour < 23)) {
       return 1;
     }
     return 1;
@@ -363,7 +382,7 @@ class CalendarUtils {
         solarMonth: solarDateTime.month,
         solarDay: solarDateTime.day);
     Lunar lunar = LunarSolarConverter.solarToLunar(solar);
-    int khac = getKhacOfTime();
+    int khac = getKhacOfTime(solarDateTime);
     int surplus = (lunar.lunarDay + lunar.lunarMonth + khac - 2) % 6;
     switch (surplus) {
       case 0:
