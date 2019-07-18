@@ -81,3 +81,15 @@ final TextStyle valueTextStyle = TextStyle(
   fontSize: 18.0,
   color: Colors.white,
 );
+
+final TextStyle queAmStyle = TextStyle(
+  //fontWeight: FontWeight.bold,
+  fontSize: 32.0,
+  color: badColor,
+);
+
+final TextStyle queDuongStyle = TextStyle(
+  //fontWeight: FontWeight.bold,
+  fontSize: 32.0,
+  color: goodColor,
+);

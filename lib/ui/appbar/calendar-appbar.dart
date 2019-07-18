@@ -52,7 +52,7 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
     final DateTime picked = await showDatePickerCustom(
       context: context,
       initialDate: new DateTime.now(),
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(1900, 8),
       lastDate: DateTime(2101),
       locale: const Locale('vi', 'VN'),
 
