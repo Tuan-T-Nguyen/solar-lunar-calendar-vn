@@ -4,6 +4,7 @@ import 'package:pageview/bloc/bloc_provider.dart';
 import 'package:pageview/bloc/change_date_bloc.dart';
 import 'package:pageview/bloc/truckien_bloc.dart';
 import 'package:pageview/database/sqlite/repository/truckien_repository.dart';
+import 'package:pageview/resources/colors.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
@@ -75,12 +76,12 @@ class IllustrationDayWidget extends StatelessWidget {
                                       SizedBox(height: size_4,),
                                       Text(
                                         snapshot.hasData ? snapshot.data.workTodo : '',
-                                        style: TextStyle(color: Colors.green),
+                                        style: TextStyle(color: goodColor),
                                       ),
                                       SizedBox(height: size_4,),
                                       Text(
                                         snapshot.hasData ? snapshot.data.workNotTodo : '',
-                                        style: TextStyle(color: Colors.purple),
+                                        style: TextStyle(color: badColor),
                                       )
                                     ],
                                   ),

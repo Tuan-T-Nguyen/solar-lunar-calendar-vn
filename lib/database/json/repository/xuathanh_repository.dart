@@ -18,12 +18,9 @@ class XuathanhRepository {
   }
 
   static Future<XuatHanh> getXuatHanh(DateTime dateTime) async {
-    Lunar lunar = CalendarUtils.solarToLunarByDateTime(dateTime);
-    int khac = CalendarUtils.getKhacOfTime(dateTime);
-    int surplus = (lunar.lunarDay + lunar.lunarMonth + khac - 2) % 6;
     XuatHanhList xuatHanhList = await getXuatHanhs();
     for (XuatHanh xuatHanh in xuatHanhList.xuathanhs) {
-      if (xuatHanh.surplus == surplus) {
+      if (xuatHanh.surplus == CalendarUtils.getSurplus(dateTime)) {
         return xuatHanh;
       }
     }

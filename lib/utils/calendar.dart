@@ -2,46 +2,9 @@ import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:pageview/models/hh_dao.dart';
 import "dart:math";
 
-class CalendarUtils {
-  static List<String> cans = [
-    "Giáp",
-    "Ất",
-    "Bính",
-    "Đinh",
-    "Mậu",
-    "Kỷ",
-    "Canh",
-    "Tân",
-    "Nhâm",
-    "Quí"
-  ];
-  static const String TY = "Tý";
-  static const String SUU = "Sửu";
-  static const String DAN = "Dần";
-  static const String MAO = "Mão";
-  static const String THIN = "Thìn";
-  static const String TI = "Tị";
-  static const String NGO = "Ngọ";
-  static const String MUI = "Mùi";
-  static const String THAN = "Thân";
-  static const String DAU = "Dậu";
-  static const String TUAT = "Tuất";
-  static const String HOI = "Hợi";
-  static List<String> CHIS = [
-    TY,
-    SUU,
-    DAN,
-    MAO,
-    THIN,
-    TI,
-    NGO,
-    MUI,
-    THAN,
-    DAU,
-    TUAT,
-    HOI
-  ];
+import 'constants.dart';
 
+class CalendarUtils {
   // Get day of vietnamese from week day
   static String getDayStringBy(int index) {
     switch (index) {
@@ -66,13 +29,13 @@ class CalendarUtils {
   static String getCanChiOfYear(int lunarYear) {
     int can = (lunarYear + 6) % 10;
     int chi = (lunarYear + 8) % 12;
-    return cans[can] + " " + CHIS[chi];
+    return CANS[can] + " " + CHIS[chi];
   }
 
   static String getCanChiOfMonth(int lunarYear, int lunarMonth) {
     int can = (lunarYear * 12 + lunarMonth + 3) % 10;
     int chi = (lunarMonth + 1) % 12;
-    return cans[can] + " " + CHIS[chi];
+    return CANS[can] + " " + CHIS[chi];
   }
 
   static String getCanChiOfDay(int solarDay, int solarMonth, int solarYear) {
@@ -80,7 +43,7 @@ class CalendarUtils {
 
     int can = (jd + 9) % 10;
     int chi = (jd + 1) % 12;
-    return cans[can] + " " + CHIS[chi];
+    return CANS[can] + " " + CHIS[chi];
   }
 
   static String getChiOfDay(int solarDay, int solarMonth, int solarYear) {
@@ -92,7 +55,7 @@ class CalendarUtils {
   static String getCanChiOfHour(int solarDay, int solarMonth, int solarYear) {
     int jd = getJDFromDate(solarDay, solarMonth, solarYear).toInt();
     int can = (jd - 1) * 2 % 10;
-    return cans[can] + " " + CHIS[0];
+    return CANS[can] + " " + CHIS[0];
   }
 
   static int getJDFromDate(int solarDay, int solarMonth, int solarYear) {
@@ -149,18 +112,30 @@ class CalendarUtils {
 
   static int getTimeByChi(String chi, bool isStartTime) {
     switch (chi) {
-      case TY: return isStartTime ? 23 : 1;
-      case SUU: return isStartTime ? 1 : 3;
-      case DAN: return isStartTime ? 3 : 5;
-      case MAO: return isStartTime ? 5 : 7;
-      case THIN: return isStartTime ? 7 : 9;
-      case TI: return isStartTime ? 9 : 11;
-      case NGO: return isStartTime ? 11 : 13;
-      case MUI: return isStartTime ? 13 : 15;
-      case THAN: return isStartTime ? 15 : 17;
-      case DAU: return isStartTime ? 17 : 19;
-      case TUAT: return isStartTime ? 19 : 21;
-      case HOI: return isStartTime ? 21 : 23;
+      case TY:
+        return isStartTime ? 23 : 1;
+      case SUU:
+        return isStartTime ? 1 : 3;
+      case DAN:
+        return isStartTime ? 3 : 5;
+      case MAO:
+        return isStartTime ? 5 : 7;
+      case THIN:
+        return isStartTime ? 7 : 9;
+      case TI:
+        return isStartTime ? 9 : 11;
+      case NGO:
+        return isStartTime ? 11 : 13;
+      case MUI:
+        return isStartTime ? 13 : 15;
+      case THAN:
+        return isStartTime ? 15 : 17;
+      case DAU:
+        return isStartTime ? 17 : 19;
+      case TUAT:
+        return isStartTime ? 19 : 21;
+      case HOI:
+        return isStartTime ? 21 : 23;
       default:
         return 0;
     }
@@ -169,29 +144,53 @@ class CalendarUtils {
   static String getIconZodiacImage(String chi, bool isLargeSize) {
     switch (chi) {
       case TY:
-        return isLargeSize ? "assets/12Zodiac/ty.jpeg" : "assets/12Zodiac/mouse.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/ty.jpeg"
+            : "assets/12Zodiac/mouse.jpeg";
       case SUU:
-        return isLargeSize ? "assets/12Zodiac/suu.jpeg" : "assets/12Zodiac/buffalo.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/suu.jpeg"
+            : "assets/12Zodiac/buffalo.jpeg";
       case DAN:
-        return isLargeSize ? "assets/12Zodiac/dan.jpeg" : "assets/12Zodiac/tiger.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/dan.jpeg"
+            : "assets/12Zodiac/tiger.jpeg";
       case MAO:
-        return isLargeSize ? "assets/12Zodiac/mao.jpeg" : "assets/12Zodiac/cat.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/mao.jpeg"
+            : "assets/12Zodiac/cat.jpeg";
       case THIN:
-        return isLargeSize ? "assets/12Zodiac/thin.jpeg" : "assets/12Zodiac/dragon.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/thin.jpeg"
+            : "assets/12Zodiac/dragon.jpeg";
       case TI:
-        return isLargeSize ? "assets/12Zodiac/ti.jpeg" : "assets/12Zodiac/snake.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/ti.jpeg"
+            : "assets/12Zodiac/snake.jpeg";
       case NGO:
-        return isLargeSize ? "assets/12Zodiac/ngo.jpeg" : "assets/12Zodiac/horse.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/ngo.jpeg"
+            : "assets/12Zodiac/horse.jpeg";
       case MUI:
-        return isLargeSize ? "assets/12Zodiac/mui.jpeg" : "assets/12Zodiac/goat.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/mui.jpeg"
+            : "assets/12Zodiac/goat.jpeg";
       case THAN:
-        return isLargeSize ? "assets/12Zodiac/than.jpeg" : "assets/12Zodiac/monkey.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/than.jpeg"
+            : "assets/12Zodiac/monkey.jpeg";
       case DAU:
-        return isLargeSize ? "assets/12Zodiac/dau.jpeg" : "assets/12Zodiac/chicken.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/dau.jpeg"
+            : "assets/12Zodiac/chicken.jpeg";
       case TUAT:
-        return isLargeSize ? "assets/12Zodiac/tuat.jpeg" : "assets/12Zodiac/dog.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/tuat.jpeg"
+            : "assets/12Zodiac/dog.jpeg";
       case HOI:
-        return isLargeSize ? "assets/12Zodiac/hoi.jpeg" : "assets/12Zodiac/pig.jpeg";
+        return isLargeSize
+            ? "assets/12Zodiac/hoi.jpeg"
+            : "assets/12Zodiac/pig.jpeg";
       default:
         return "";
     }
@@ -370,9 +369,15 @@ class CalendarUtils {
       return 5;
     }
     if ((hour >= 9 && hour < 11) || (hour >= 21 && hour < 23)) {
-      return 1;
+      return 6;
     }
     return 1;
+  }
+
+  static int getSurplus(DateTime dateTime) {
+    Lunar lunar = CalendarUtils.solarToLunarByDateTime(dateTime);
+    int khac = CalendarUtils.getKhacOfTime(dateTime);
+    return (lunar.lunarDay + lunar.lunarMonth + khac - 2) % 6;
   }
 
   // https://thientue.vn/cach-tinh-gio-xuat-hanh-tot-xau-cua-ly-thuan-phong
@@ -448,48 +453,6 @@ class CalendarUtils {
     return (sunLongitude(dayNumber - 0.5 - timeZone / 24.0) / pi * 12).toInt();
   }
 
-  // https://maphuong.com/dichly/amlich2/
-  // https://tuvilyso.org/tool/xemngay/
-  static const TIET24 = [
-    0,
-    21208,
-    42467,
-    63836,
-    85337,
-    107014,
-    128867,
-    150921,
-    173149,
-    195551,
-    218072,
-    240693,
-    263343,
-    285989,
-    308563,
-    331033,
-    353350,
-    375494,
-    397447,
-    419210,
-    440795,
-    462224,
-    483532,
-    504758
-  ];
-  static const TRUC12 = [
-    "Kiến",
-    "Trừ",
-    "Mãn",
-    "Bình",
-    "Định",
-    "Chấp",
-    "Phá",
-    "Nguy",
-    "Thành",
-    "Thu",
-    "Khai",
-    "Bế"
-  ];
   // n là số thứ tự (0-23) để lấy Tiết
 
   static int getTietKhi(int solarYear, int n) {

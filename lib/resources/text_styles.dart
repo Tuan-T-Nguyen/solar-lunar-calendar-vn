@@ -53,7 +53,7 @@ const TextStyle hourHoangDaoStyle = TextStyle(
     fontSize: size_16,
     height: 1.2,
     fontWeight: FontWeight.w800,
-    color: Colors.green,
+    color: goodColor,
 );
 
 const TextStyle hourHacDaoStyle = TextStyle(

@@ -10,9 +10,10 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       title: GestureDetector(
-        child: _buildMonthYear(),
-        onTap: () => _selectDate(context),
+        child: _buildMonthYear(changeDateBloc),
+        onTap: () => _selectDate(context, changeDateBloc),
       ),
+      centerTitle: true,
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
@@ -28,8 +29,8 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildMonthYear() {
-    DateTime now = DateTime.now();
+  Widget _buildMonthYear(ChangeDateBloc changeDateBloc) {
+    DateTime now = changeDateBloc.dateTime;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -47,7 +48,7 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<Null> _selectDate(BuildContext context, ChangeDateBloc changeDateBloc) async {
     final DateTime picked = await showDatePickerCustom(
       context: context,
       initialDate: new DateTime.now(),
@@ -58,7 +59,7 @@ class CalendarAppbar extends StatelessWidget implements PreferredSizeWidget {
     );
 
     if (picked != null && picked != new DateTime.now()){
-      //Provider.of<DateModel>(context, listen: false).setNow(picked);
+      changeDateBloc.setNewDateTime(picked);
     }
   }
 

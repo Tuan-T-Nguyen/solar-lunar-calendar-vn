@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:pageview/bloc/change_date_bloc.dart';
+import 'package:pageview/resources/colors.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/calendar.dart';
@@ -129,7 +130,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
                   child: Hour2HDWidget(
                     hhDao:
                     CalendarUtils.getHourOfHoangDao(changeDateBloc.dateTime),
-                    bgColor: Colors.green,
+                    bgColor: goodColor,
                   ),
                 ),
                 SizedBox(
@@ -147,7 +148,7 @@ class _BottomSheetLunarWidgetState extends State<BottomSheetLunarWidget>
                   child: Hour2HDWidget(
                     hhDao:
                     CalendarUtils.getHourOfHacDao(changeDateBloc.dateTime),
-                    bgColor: Colors.purple,
+                    bgColor: badColor,
                   ),
                 ),
                 SizedBox(
