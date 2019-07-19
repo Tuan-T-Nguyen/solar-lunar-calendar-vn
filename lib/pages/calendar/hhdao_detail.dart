@@ -139,18 +139,18 @@ class _HHDaoDetailState extends State<HHDaoDetail> {
                                   children: <Widget>[
                                     Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: size_4),
+                                            vertical: size_8),
                                         child: Text(
                                           snapshot.data.name,
-                                          style: TextStyle(fontSize: 16.0, color: snapshot.data.status == XUATHANH_GOOD ? goodColor : badColor),
+                                          style: TextStyle(fontSize: 20.0, color: snapshot.data.status == XUATHANH_GOOD ? goodColor : badColor, fontWeight: FontWeight.bold),
                                         )),
                                     Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: size_4),
+                                            vertical: size_8),
                                         child: Text(snapshot.data.description, style: TextStyle(fontSize: 16.0,),)),
                                     Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: size_4),
+                                            vertical: size_8),
                                         child: Text(snapshot.data.poem, style: TextStyle(fontSize: 16.0,),)),
                                   ],
                                 ),

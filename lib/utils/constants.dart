@@ -84,3 +84,10 @@ const TRUC12 = [
   "Khai",
   "Bế"
 ];
+
+/// GIEO QUE
+const int COIN_FRONT = 0;
+const int COIN_BACK = 1;
+const String QUE_DUONG = '¦';
+const String QUE_AM = '|';
+

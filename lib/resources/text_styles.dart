@@ -41,6 +41,7 @@ const TextStyle weekdayTStyle = TextStyle(
 const TextStyle illustrationTextStyle = TextStyle(
   color: secondaryColor,
   fontSize: size_14,
+  fontWeight: FontWeight.bold
 );
 
 const TextStyle descriptionBoldStyle = TextStyle(
@@ -91,5 +92,5 @@ final TextStyle queAmStyle = TextStyle(
 final TextStyle queDuongStyle = TextStyle(
   //fontWeight: FontWeight.bold,
   fontSize: 32.0,
-  color: goodColor,
+  color: Colors.blueAccent,
 );

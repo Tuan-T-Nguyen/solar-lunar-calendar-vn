@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pageview/pages/divine/explain_que.dart';
 import 'package:pageview/resources/colors.dart';
 import 'package:pageview/ui/appbar/calendar-appbar.dart';
 import 'package:pageview/ui/appbar/divine-appbar.dart';
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage>
   List<Widget> _tabList = [
     CalendarPage(),
     DivinePage(),
+    // ExplainQue(),
   ];
 
   TabController _tabController;

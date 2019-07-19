@@ -73,15 +73,15 @@ class IllustrationDayWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Container(width: double.infinity, child: Text(truckienName.toUpperCase(), style: illustrationTextStyle,)),
-                                      SizedBox(height: size_4,),
+                                      SizedBox(height: size_8,),
                                       Text(
                                         snapshot.hasData ? snapshot.data.workTodo : '',
-                                        style: TextStyle(color: goodColor),
+                                        style: TextStyle(color: goodColor, fontSize: 14.0),
                                       ),
-                                      SizedBox(height: size_4,),
+                                      SizedBox(height: size_8,),
                                       Text(
                                         snapshot.hasData ? snapshot.data.workNotTodo : '',
-                                        style: TextStyle(color: badColor),
+                                        style: TextStyle(color: badColor, fontSize: 14.0),
                                       )
                                     ],
                                   ),

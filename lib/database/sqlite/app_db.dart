@@ -53,7 +53,7 @@ class AppDatabase {
     return db.transaction((Transaction txn) async {
       txn.execute('INSERT INTO ${TrucKien.tblTruckien}(${TrucKien.dbName}, ${TrucKien.dbWorkTodo}, ${TrucKien.dbWorkNotTodo}) '
       'VALUES '
-          '("Trực Kiến", "Tốt cho các việc thi ơn huệ, trồng cây cối.", " Xấu cho các việc chôn cất, đào giếng, lợp nhà."), '
+          '("Trực Kiến", "Tốt cho các việc thi ơn huệ, trồng cây cối.", "Xấu cho các việc chôn cất, đào giếng, lợp nhà."), '
           '("Trực Trừ", "Tốt cho các việc trừ phục, cúng giải, cạo đầu", "Xấu cho các việc xuất vốn, hội họp, châm chích."), '
           '("Trực Mãn", "Tốt cho các việc xuất hành, sửa kho, dựng nhà, mở tiệm.", "Xấu cho các việc chôn cất, thưa kiện, xuất vốn, nhậm chức."), '
           '("Trực Bình", "Tốt cho các việc rời bếp, thượng lương, làm chuồng lục súc.", "Xấu cho các việc khai trương, xuất nhập tài vật, giá thú, động thở."), '

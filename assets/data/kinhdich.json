@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "binary": "111111",
+    "name": "Thuần Càn",
+    "chinese": "乾 qián",
+    "type": "Đại Cát",
+    "goods": "Có thể xem tốt cho mọi việc",
+    "internal": "☰ (||| 乾 qián) Càn hay Trời (天) http://ikinhnghiem.com/ung-dung-que-1-thuan-can-giai-doan/",
+    "foreign": "☰ (||| 乾 qián) Càn hay Trời (天)",
+    "explain": "http://ikinhnghiem.com/ung-dung-que-1-thuan-can-giai-doan/ Mọi việc đều diễn ra đúng theo kế hoạch hoặc sự mong đợi. Thành công và danh tiếng lẫn vận may đều biến thành hiện thực. Tuy nhiên, sự quá tự mãn, sự quá thỏa mãn và kiêu ngạo hay thái độ hống hách sẽ đưa đến những điều không may. Do đó, phải biết cẩn trọng, chu đáo và suy nghĩ khi làm mọi việc.",
+    "works": [
+      "Ước muốn---Có thể đạt được. Nhưng phải biết cởi mở và khiêm tốn khi thực hiện mọi việc.",
+      "Hôn nhân---Người đàn ông này sẽ là một người chồng tốt. Sự quá cao vọng sẽ dẫn đến thất bại.",
+      "Tình yêu---Thành công là điều có thể. Nhưng nếu cả hai bên đều ích kỷ, kết quả tình bạn sẽ tan vỡ.",
+      "Gia đạo---Hạnh phúc và thịnh vượng. Tuy nhiên, kiêu ngạo và hoang phí sẽ dẫn đến lụn bại.",
+      "Con cái---Khỏe mạnh, hết sức hạnh phúc và tràn đầy khả năng, nhưng phải không được làm hư chúng bởi sự nuông chiều quá đáng trong khi chúng trưởng thành. Nhiều con trai hơn con gái. Thai nghén: con trai.",
+      "Vay vốn---Thành công, nhưng phải xử lý cẩn thận trong toàn bộ quá trình.",
+      "Kinh doanh---Sẽ thu được lợi nhuận, nhưng vẫn chưa thích hợp để cố gắng khuếch trương lớn dựa trên lợi nhuận đó.",
+      "Thị trường chứng khoán---Giá cả hiện giờ đang cao nhưng chẳng bao lâu sẽ giảm giá; bán đi.",
+      "Tuổi thọ---Sống thọ và khỏe mạnh. Phải biết chú ý đến chế độ ăn uống hàng ngày, bằng không sức khỏe của bạn sẽ bị ảnh hưởng. Phải đặc biệt dành riêng sự chăm sóc cho ngực và các tật bệnh liên quan đến đầu.",
+      "Bệnh tật---Bệnh trạng tương đối nghiêm trọng, nhưng với một thể chất tráng kiện bẩm sinh, có thể bình phục thông qua nghỉ ngơi và dưỡng bệnh. Chứng bệnh liên quan đến đầu hay các vùng ngực.",
+      "Chờ người---Người sẽ tới là người thân thiện và sẽ mang đến vui vẻ.",
+      "Tìm người---Hình ảnh đó còn ở rất xa. Việc tìm kiếm sẽ mất nhiều thời gian. Nên tìm về hướng tây bắc.",
+      "Vật bị mất---Sẽ tìm lại được, nhưng sẽ phải mất thời gian. Tìm ở hướng tây bắc.",
+      "Du lịch---Tốt đẹp, thuận lợi.",
+      "Kiện tụng và tranh chấp---Nếu vụ kiện hợp lý, bạn sẽ thắng; nếu không, kết quả sẽ hết sức tệ hại.",
+      "Việc làm---Hãy cẩn thận và chuyên cần; bạn sẽ đạt được mục tiêu hay kỳ vọng của mình. Cấp trên có thể sẽ cất nhắc, nâng bậc hay thăng chức cho bạn; nhưng phải thận trọng.",
+      "Thi cử---Điểm cao, nhưng không được chây lười, biếng nhác hay buông lỏng.",
+      "Kinh doanh mới, thay đổi nghề nghiệp, chuyên môn hay chỗ làm---Tốt nhất hãy giữ nguyên tình trạng, vị trí hoặc thân phận hiện tại. Tuy nhiên, các đầu tư kinh doanh mới thì có triển vọng.",
+      "Thời tiết---Thời tiết tốt vào lúc này, nhưng trời có thể chuyển sang thời tiết xấu.",
+      ""
+    ],
+    "represent": {
+      "name": "Rồng nước",
+      "image_path": "assets/kinhdich/water_dragon.png",
+      "description": "Giao long (rồng nước) ở trong vực đã lâu, nay gặp cơn mưa liền bay lên trời. Rồng bay lượn trên trời ví như sự biến hóa, dù gặp tai họa cũng không bị hại, thỏa chí vẫy vùng, không còn gì hơn.",
+      "status": "Nếu gieo được quẻ này, đó là điểm “Thời vận đã đến”, gặp thời đắc thế, thỏa chí vẫy vùng, không sợ họa hung.",
+      "before-poem": "Ngày xưa, Sài Thế Trung cùng khốn phải đẩy xe đi bán than, gieo được quẻ này. Sau quả nhiên ứng nghiệm: Quách Uy không con đã cân nhắc Thế Trung lên địa vị lớn. Đúng là ứng với quẻ “Khốn Long Đắc Thủy”, thật là “thời vận đã đến”.",
+      "poem": "Thế Trung khốn khó, đẩy xe than\nThành tâm rút thẻ, được quẻ Càn\nQuách Uy không con, nhường tước vị\nKhốn Long Đắc Thủy, thật là sang."
+    }
+  },
+  {
+    "id": 2,
+    "binary": "000000",
+    "name": "Thuần Khôn",
+    "chinese": "坤 kūn",
+    "type": "Đại Cát",
+    "goods": "Có thể xem tốt cho mọi việc",
+    "internal": "☰ (||| 乾 qián) Càn hay Trời (天) http://ikinhnghiem.com/ung-dung-que-1-thuan-can-giai-doan/",
+    "foreign": "☰ (||| 乾 qián) Càn hay Trời (天)",
+    "explain": "https://989me.vn/vi/kien-thuc-phong-thuy/que-kinh-dich/que-so-1-trong-kinh-dich-thuan-can-qian-khon-long-dac-thuy-thoi-van-da-den-83.html Quẻ Càn là quẻ Đại Cát, đặc biệt vui sướng. Người xem thấy quẻ này rất mừng, mọi việc như ý, không sợ họa hung.",
+    "represent": {
+      "name": "Rồng nước",
+      "image_path": "assets/kinhdich/water_dragon.png",
+      "description": "Giao long (rồng nước) ở trong vực đã lâu, nay gặp cơn mưa liền bay lên trời. Rồng bay lượn trên trời ví như sự biến hóa, dù gặp tai họa cũng không bị hại, thỏa chí vẫy vùng, không còn gì hơn.",
+      "status": "Nếu gieo được quẻ này, đó là điểm “Thời vận đã đến”, gặp thời đắc thế, thỏa chí vẫy vùng, không sợ họa hung.",
+      "before-poem": "Ngày xưa, Sài Thế Trung cùng khốn phải đẩy xe đi bán than, gieo được quẻ này. Sau quả nhiên ứng nghiệm: Quách Uy không con đã cân nhắc Thế Trung lên địa vị lớn. Đúng là ứng với quẻ “Khốn Long Đắc Thủy”, thật là “thời vận đã đến”.",
+      "poem": "Thế Trung khốn khó, đẩy xe than\nThành tâm rút thẻ, được quẻ Càn."
+    }
+  },
+  {
+    "id": 25,
+    "name": "Thiên Lôi Vô Vọng",
+    "chinese": "無妄 wú wàng",
+    "type": "Vô lợi (không tốt)"
+  }
+]
