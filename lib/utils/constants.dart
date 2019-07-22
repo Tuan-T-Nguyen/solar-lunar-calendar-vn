@@ -91,3 +91,30 @@ const int COIN_BACK = 1;
 const String QUE_DUONG = '¦';
 const String QUE_AM = '|';
 
+enum GIEOQUE_CODE {
+  ALL,
+  UOC_MUON,
+  HON_NHAN,
+  TINH_YEU,
+  GIA_DAO,
+  CON_CAI,
+  VAY_VON,
+  KINH_DOANH,
+  CHUNG_KHOAN,
+  TUOI_THO,
+  BENH_TAT,
+  CHO_NGUOI,
+  TIM_NGUOI,
+  VAT_BI_MAT,
+  DU_LICH,
+  KIEN_TUNG,
+  VIEC_LAM,
+  THI_CU,
+  NGHE_NGHIEP,
+  THOI_TIET,
+  SU_NGHIEP,
+  NHAM_CHUC,
+  XUAT_HANH_DI_XA,
+  SU_VIEC
+}
+

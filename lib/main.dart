@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent
     ));
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     // https://developer.school/posts/flutter-provider-and-bloc-in-5-minutes/
     return ChangeNotifierProvider<ChangeDateBloc>.value(
       value: ChangeDateBloc(),
@@ -31,7 +35,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Color(0xFFF84655),
           scaffoldBackgroundColor: Colors.transparent,
-
+          fontFamily: 'OpenSans',
+          canvasColor: Colors.transparent,
         ),
         home: HomePage(),
         debugShowCheckedModeBanner: false,
@@ -61,7 +66,7 @@ class _HomePageState extends State<HomePage>
   List<Widget> _tabList = [
     CalendarPage(),
     DivinePage(),
-    // ExplainQue(),
+    ExplainQue(),
   ];
 
   TabController _tabController;

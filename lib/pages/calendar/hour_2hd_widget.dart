@@ -18,7 +18,7 @@ class Hour2HDWidget extends StatefulWidget {
 }
 
 class _Hour2HDWidgetState extends State<Hour2HDWidget> {
-  final double _widthCard = 80.0;
+  final double _widthCard = 84.0;
   final double _leftRightBtnWidth = 40;
 
   bool isHideLeftButton = true;

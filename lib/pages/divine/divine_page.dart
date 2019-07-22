@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:pageview/resources/colors.dart';
 import 'package:pageview/resources/sizes.dart';
 import 'package:pageview/resources/text_styles.dart';
 import 'package:pageview/utils/constants.dart';
@@ -9,6 +10,7 @@ import 'package:pageview/utils/gieoque_utils.dart';
 import 'package:pageview/utils/size_config.dart';
 
 import 'explain_que.dart';
+import 'multi_select_chip.dart';
 
 class DivinePage extends StatefulWidget {
   @override
@@ -44,9 +46,33 @@ class _DivinePageState extends State<DivinePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  List<String> reportList = [
+    "Not relevant",
+    "Illegal",
+    "Spam",
+    "Offensive",
+    "Uncivil"
+  ];
+
+  _showModalBottomSheet(context) {
+    showModalBottomSheet(context: context, builder: (BuildContext context) {
+      return Container(
+        height: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+        ),
+        child: Container(
+          child: MultiSelectChip(choiceList: reportList,),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: <Widget>[
           Flexible(
@@ -129,6 +155,26 @@ class _DivinePageState extends State<DivinePage> with TickerProviderStateMixin {
                 : ""),
           ),
           Container(
+            width: MediaQuery.of(context).size.width,
+            child: RawMaterialButton(
+              onPressed: () {
+                _showModalBottomSheet(context);
+              },
+              fillColor: primaryColor,
+              child: Text("Gieo Quẻ"),
+              //elevation: 0,
+              constraints: BoxConstraints(
+                minHeight: 50
+              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              textStyle: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+          ),
+          Container(
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(
                 onPressed: _isExecute
@@ -158,37 +204,49 @@ class _DivinePageState extends State<DivinePage> with TickerProviderStateMixin {
                                 case 1:
                                   {
                                     _que_1 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                                 case 2:
                                   {
                                     _que_2 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                                 case 3:
                                   {
                                     _que_3 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                                 case 4:
                                   {
                                     _que_4 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                                 case 5:
                                   {
                                     _que_5 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                                 case 6:
                                   {
                                     _que_6 = GieoQueUtils.getNameQue(
-                                        _coinStatus1, _coinStatus2, _coinStatus3);
+                                        _coinStatus1,
+                                        _coinStatus2,
+                                        _coinStatus3);
                                     break;
                                   }
                               }
@@ -196,7 +254,6 @@ class _DivinePageState extends State<DivinePage> with TickerProviderStateMixin {
                             });
                           });
                         }
-
                       },
                 child: Text(_isExecute
                     ? "Đang gieo"

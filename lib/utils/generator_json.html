@@ -1,0 +1,49 @@
+<html>
+<body>
+<p style="text-align: justify;"><strong>Ước muốn:</strong>Có thể đạt được. Nhưng phải biết cởi mở và khiêm tốn khi thực hiện mọi việc.</p>
+<p style="text-align: justify;"><strong>Hôn nhân:</strong>Người đàn ông này sẽ là một người chồng tốt. Sự quá cao vọng sẽ dẫn đến thất bại.</p>
+<p style="text-align: justify;"><strong>Tình yêu:</strong>Thành công là điều có thể. Nhưng nếu cả hai bên đều ích kỷ, kết quả tình bạn sẽ tan vỡ.</p>
+<p style="text-align: justify;"><strong>Gia đạo:</strong>Hạnh phúc và thịnh vượng. Tuy nhiên, kiêu ngạo và hoang phí sẽ dẫn đến lụn bại.</p>
+<p style="text-align: justify;"><strong>Con cái:</strong>Khỏe mạnh, hết sức hạnh phúc và tràn đầy khả năng, nhưng phải không được làm hư chúng bởi sự nuông chiều quá đáng trong khi chúng trưởng thành. Nhiều con trai hơn con gái. Thai nghén: con trai.</p>
+<p style="text-align: justify;"><strong>Vay vốn:</strong>Thành công, nhưng phải xử lý cẩn thận trong toàn bộ quá trình.</p>
+<p style="text-align: justify;"><strong>Kinh doanh:</strong>Sẽ thu được lợi nhuận, nhưng vẫn chưa thích hợp để cố gắng khuếch trương lớn dựa trên lợi nhuận đó.</p>
+<p style="text-align: justify;"><strong>Thị trường chứng khoán:</strong>Giá cả hiện giờ đang cao nhưng chẳng bao lâu sẽ giảm giá; bán đi.</p>
+<p style="text-align: justify;"><strong>Tuổi thọ:</strong>Sống thọ và khỏe mạnh. Phải biết chú ý đến chế độ ăn uống hàng ngày, bằng không sức khỏe của bạn sẽ bị ảnh hưởng. Phải đặc biệt dành riêng sự chăm sóc cho ngực và các tật bệnh liên quan đến đầu.</p>
+<p style="text-align: justify;"><strong>Bệnh tật:</strong>Bệnh trạng tương đối nghiêm trọng, nhưng với một thể chất tráng kiện bẩm sinh, có thể bình phục thông qua nghỉ ngơi và dưỡng bệnh. Chứng bệnh liên quan đến đầu hay các vùng ngực.</p>
+<p style="text-align: justify;"><strong>Chờ người:</strong>Người sẽ tới là người thân thiện và sẽ mang đến vui vẻ.</p>
+<p style="text-align: justify;"><strong>Tìm người:</strong>Hình ảnh đó còn ở rất xa. Việc tìm kiếm sẽ mất nhiều thời gian. Nên tìm về hướng tây bắc.</p>
+<p style="text-align: justify;"><strong>Vật bị mất:</strong>Sẽ tìm lại được, nhưng sẽ phải mất thời gian. Tìm ở hướng tây bắc.</p>
+<p style="text-align: justify;"><strong>Du lịch:</strong>Tốt đẹp, thuận lợi.</p>
+<p style="text-align: justify;"><strong>Kiện tụng và tranh chấp:</strong>Nếu vụ kiện hợp lý, bạn sẽ thắng; nếu không, kết quả sẽ hết sức tệ hại.</p>
+<p style="text-align: justify;"><strong>Việc làm:</strong>Hãy cẩn thận và chuyên cần; bạn sẽ đạt được mục tiêu hay kỳ vọng của mình. Cấp trên có thể sẽ cất nhắc, nâng bậc hay thăng chức cho bạn; nhưng phải thận trọng.</p>
+<p style="text-align: justify;"><strong>Thi cử:</strong>Điểm cao, nhưng không được chây lười, biếng nhác hay buông lỏng.</p>
+<p style="text-align: justify;"><strong>Kinh doanh mới, thay đổi nghề nghiệp, chuyên môn hay chỗ làm:</strong>Tốt nhất hãy giữ nguyên tình trạng, vị trí hoặc thân phận hiện tại. Tuy nhiên, các đầu tư kinh doanh mới thì có triển vọng.</p>
+<p style="text-align: justify;"><strong>Thời tiết:</strong>Trời trong.</p>
+<p style="text-align: justify;"><strong>Xem sự nghiệp:</strong>hiện tại khó khăn, tương lai thành công.</p>
+<p style="text-align: justify;"><strong>Xem nhậm chức:</strong>chưa được.</p>
+<p style="text-align: justify;"><strong>Xem nghề nghiệp:</strong>chuyển nghề phải chờ thời cơ.</p>
+<p style="text-align: justify;"><strong>Xem tình yêu:</strong>Nam có duyên phận, nữ thì không.</p>
+<p style="text-align: justify;"><strong>Xem hôn nhân:</strong>giữa chừng không thành, nữ thì tốt.</p>
+<p style="text-align: justify;"><strong>Xem đợi người:</strong>sẽ đến muộn.</p>
+<p style="text-align: justify;"><strong>Xem xuất hành đi xa:</strong>nên chờ cơ hội khác.</p>
+<p style="text-align: justify;"><strong>xem sự việc:</strong>nếu có tính thiện thì không bị ngăn trở.</p>
+</body>
+</html>
+
+<script>
+    var result = '[';
+    var x = document.querySelectorAll("p");
+    for (i = 0; i < x.length; i++) {
+       var text = x[i].innerText.split(':');
+       var text0 = text[0].charAt(0).toUpperCase() + text[0].slice(1);
+       var text1 = text[1].charAt(0).toUpperCase() + text[1].slice(1);
+       if (i == x.length - 1) {
+        result += '{ "name": "' + text0 + '", "description": "'+ text1 +'"}]'
+       } else {
+        result += '{ "name": "' + text0 + '", "description": "'+ text1 +'"},'
+       }
+    }
+    console.log(result);
+  //  console.log(JSON.parse(result));
+
+</script>
