@@ -91,7 +91,7 @@ const int COIN_BACK = 1;
 const String QUE_DUONG = '¦';
 const String QUE_AM = '|';
 
-enum GIEOQUE_CODE {
+const GIEOQUE_CODE [
   ALL,
   UOC_MUON,
   HON_NHAN,
@@ -116,5 +116,5 @@ enum GIEOQUE_CODE {
   NHAM_CHUC,
   XUAT_HANH_DI_XA,
   SU_VIEC
-}
+]
 

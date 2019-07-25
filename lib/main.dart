@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:pageview/pages/divine/explain_que.dart';
 import 'package:pageview/resources/colors.dart';
 import 'package:pageview/ui/appbar/calendar-appbar.dart';
@@ -12,9 +13,10 @@ import 'bloc/change_date_bloc.dart';
 import 'pages/calendar/calendar_page.dart';
 import 'pages/divine/divine_page.dart';
 
-void main() => runApp(
-  MyApp()
-);
+void main(){
+  Stetho.initialize();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

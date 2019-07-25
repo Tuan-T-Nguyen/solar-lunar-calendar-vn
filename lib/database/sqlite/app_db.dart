@@ -29,17 +29,25 @@ class AppDatabase {
 
   Future _init() async {
     // Get a location using path_provider
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "lichvannien.db");
-    print(path);
+    String path = await _getPath();
     _database = await openDatabase(path, version: 1,
       onCreate: (Database db, int version) async {
         await _createTruckienTable(db);
         await _populateTruckien(db);
+        await _createGieoQueTypeTable(db);
+        await _populateGieoQueType(db);
         // Can create another tables in here
     });
     didInit = true;
-  
+  }
+
+  Future<String> _getPath() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    if (Platform.isAndroid) {
+      return join(documentsDirectory.parent.path, "databases/lichphattai.db");
+    } else {
+      return join(documentsDirectory.path, "lichphattai.db");
+    }
   }
   
   Future _createTruckienTable(Database db) {
@@ -69,6 +77,15 @@ class AppDatabase {
           '("Trực Thu", "Tốt cho các việc khai trương, lập kho vựa, giao dịch, may mặc.", "Xấu cho các việc an táng, giá thú, nhậm chức, xuất nhập tài vật."), '
           '("Trực Khai", "Tốt cho các việc làm nhà, động thổ, làm chuồng gia súc, giá thú, đào giếng.", "Xấu cho các việc giao dịch, châm chích, trồng tỉa."), '
           '("Trực Bế", "Tốt cho các việc làm cửa, thượng lương, giá thú, trị bệnh.", "Xấu cho các việc nhậm chức, châm chích, đào giếng, kiện thưa.")');
+    });
+  }
+
+  Future _createGieoQueTypeTable(Database db) {
+    return db.transaction((Transaction txn) async {
+      txn.execute("CREATE TABLE ${GieoQueType.tbl} ("
+          "${GieoQueType.dbId} INTEGER PRIMARY KEY AUTOINCREMENT, "
+          "${GieoQueType.dbName} TEXT, "
+          "${GieoQueType.dbCode} TEXT );");
     });
   }
 
